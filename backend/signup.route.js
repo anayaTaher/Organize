@@ -69,7 +69,7 @@ router.post('/forgotPassword', async (request, response) => {
 			from: 'organize.graduation.project@gmail.com',
 			to: request.body.email,
 			subject: 'Link Code',
-			html: `Hello ${request.body.firstName}, Click on this link to reset your password <b><br></bt>${link}<br></b>`
+			html: `Hello, Click on this link to reset your password <b><br></bt>${link}<br></b>`
 		}
 		
 		transporter.sendMail(mailOptions, function (error, info) {
@@ -90,16 +90,12 @@ router.post('/reset-password/:id/:token', async (request, response) => {
 		
 		const {id, token} = request.body
 		idToken = {id, token}
-		confirmLinkModel.checkLink(id, token).then(() => {
-			response.json(1)
-		}).catch(() => {
-			response.json(0)
-		})
+		confirmLinkModel.checkLink(id, token).then(() => response.json(1)).catch(() => response.json(0))
 		
 	} else {
 		bcrypt.hash(request.body.password, 10).then(pass => {
-			usersModel.changePassword(idToken.id, pass).then(res => response.json(1))
-			confirmLinkModel.checkLink(idToken.id, idToken.token)
+			usersModel.changePassword(idToken.id, pass).then(() => response.json(1))
+			confirmLinkModel.deleteConfirmLink(idToken.id)
 		})
 	}
 })

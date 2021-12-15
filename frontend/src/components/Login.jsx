@@ -49,7 +49,7 @@ export default function Login() {
 		axios.post('http://localhost:4000/login', data).then(res => {
 			setErr(res.data)
 			if (res.data === 2) {
-				auth.signInWithEmailAndPassword(auth, email, password).then()
+				auth.signInWithEmailAndPassword(email, password).then()
 			}
 		})
 	}

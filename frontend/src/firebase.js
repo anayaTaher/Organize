@@ -18,6 +18,4 @@ const auth = firebase.auth()
 const db = firebaseApp.firestore()
 const storage = firebase.storage()
 
-auth.onAuthStateChanged(user => console.log(user.displayName + " Is Logged In Now"))
-
 export {auth, db, storage}

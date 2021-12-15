@@ -25,13 +25,7 @@ export default function ForgotPassword() {
 	const [email, setEmail] = useState("")
 	const [err, setErr] = useState(-1)
 	const {register, handleSubmit, formState: {errors}} = useForm()
-	const onSubmit = (data) => {
-		axios.post('http://localhost:4000/login', data).then(res => {
-			setErr(res.data)
-			if (res.data === 2) {
-			}
-		})
-	}
+	const onSubmit = data => axios.post('http://localhost:4000/forgotPassword', data).then(res => setErr(res.data))
 	
 	return <>
 		<CssBaseline/>
@@ -90,7 +84,7 @@ export default function ForgotPassword() {
 							variant="contained"
 							sx={{mt: 3, mb: 2, bgcolor: "#085DFF", padding: "10px"}}
 						>
-							Sign In
+							Request Password Reset
 						</Button>
 						{(err === 0) &&
 							<Alert
@@ -101,9 +95,9 @@ export default function ForgotPassword() {
 						}
 						{(err === 1) &&
 							<Alert
-								severity="error"
+								severity="success"
 								style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-								The password you’ve entered is incorrect.
+								Check you email for a link to reset your password.
 							</Alert>
 						}
 					</Box>
