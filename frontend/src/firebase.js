@@ -1,8 +1,12 @@
-import firebase from "firebase"
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/firestore'
+import 'firebase/storage'
 
 const firebaseApp = firebase.initializeApp({
 	apiKey: "AIzaSyDlzRcyZJd5VSBrWJJr31qQs2B4-Rp3JFY",
 	authDomain: "organize-4127e.firebaseapp.com",
+	databaseURL: "http://organize-4127e.firebase.com",
 	projectId: "organize-4127e",
 	storageBucket: "organize-4127e.appspot.com",
 	messagingSenderId: "109890046422",
@@ -10,8 +14,10 @@ const firebaseApp = firebase.initializeApp({
 	measurementId: "G-63PMDZ6GHN"
 })
 
-const db = firebaseApp.firestore()
 const auth = firebase.auth()
+const db = firebaseApp.firestore()
+const storage = firebase.storage()
 
-export {db, auth}
+auth.onAuthStateChanged(user => console.log(user.displayName + " Is Logged In Now"))
 
+export {auth, db, storage}
