@@ -12,11 +12,12 @@ import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 import {createTheme, ThemeProvider} from "@mui/material/styles"
 import {buttonsContainer, forgotPassword, h4, socialButtons, span} from "./signInUp-style"
-import {auth} from "../firebase"
-import firebase from "firebase/app"
+import {auth, db} from "../firebase"
+import firebase from 'firebase/compat/app';
 import axios from "axios"
 import {Alert} from "@mui/material"
 import {useForm} from "react-hook-form"
+import {useHistory} from "react-router-dom"
 
 
 const headerStyle = {
@@ -27,29 +28,43 @@ const headerStyle = {
 
 export default function Login() {
 	
+	const history = useHistory()
+	
+	const saveAdditionalInfoToFirebaseAndMongoDB = (cred) => {
+		const names = cred.user.displayName.split(" ")
+		db.collection('users').doc(cred.user.uid).set({
+			firstName: names[0],
+			lastName: names[1],
+			username: names[1].toLowerCase() + names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase(),
+			isOnline: true
+		}).then(() => history.push("/chat-room"))
+	}
+	
+	
 	const signInWithGoogle = () => {
 		const provider = new firebase.auth.GoogleAuthProvider()
-		auth.signInWithPopup(provider).then()
+		auth.signInWithPopup(provider).then(cred => saveAdditionalInfoToFirebaseAndMongoDB(cred))
 	}
 	const signInWithFacebook = () => {
 		const provider = new firebase.auth.FacebookAuthProvider()
-		auth.signInWithPopup(provider).then()
+		auth.signInWithPopup(provider).then(cred => saveAdditionalInfoToFirebaseAndMongoDB(cred))
 	}
 	const signInWithGithub = () => {
 		const provider = new firebase.auth.GithubAuthProvider()
-		auth.signInWithPopup(provider).then()
+		auth.signInWithPopup(provider).then(cred => saveAdditionalInfoToFirebaseAndMongoDB(cred))
 	}
-	
 	
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [err, setErr] = useState(-1)
 	const {register, handleSubmit, formState: {errors}} = useForm()
-	const onSubmit = (data) => {
+	const onSubmit = data => {
 		axios.post('http://localhost:4000/login', data).then(res => {
 			setErr(res.data)
 			if (res.data === 2) {
-				auth.signInWithEmailAndPassword(email, password).then()
+				auth.signInWithEmailAndPassword(email, password).then(cred => {
+					db.collection('users').doc(cred.user.uid).set({isOnline: true}).then(() => history.push("/chat-room"))
+				})
 			}
 		})
 	}
@@ -80,7 +95,7 @@ export default function Login() {
 						<LockOutlinedIcon/>
 					</Avatar>
 					<Typography component="h1" variant="h5" style={headerStyle}>
-						Hey, welcome back !!!
+						Log in to your account
 					</Typography>
 					<Box
 						component="form"
