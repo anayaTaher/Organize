@@ -45,12 +45,14 @@ export default function SignUp() {
 		let names
 		if (auto) {
 			names = cred.user.displayName.split(" ")
+			console.log(cred.user.photoURL)
 		}
 		db.collection('users').doc(cred.user.uid).set({
 			firstName: auto ? names[0] : first,
 			lastName: auto ? names[1] : last,
 			username: auto ? names[1].toLowerCase() + names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase() : userN,
-			isOnline: true
+			isOnline: true,
+			avatar: auto ? (cred.user.photoURL ? cred.user.photoURL : null) : null
 		}).then(() => history.push("/chat-room"))
 	}
 	
@@ -74,7 +76,8 @@ export default function SignUp() {
 			deleteCode()
 			auth.createUserWithEmailAndPassword(email, password).then(cred => {
 				db.collection('users').doc(cred.user.uid).set({isOnline: true})
-			}).then(cred => saveAdditionalInfoToFirebaseAndMongoDB(cred, false))
+				saveAdditionalInfoToFirebaseAndMongoDB(cred, false)
+			})
 		} else {
 			setConfirmError(true)
 		}

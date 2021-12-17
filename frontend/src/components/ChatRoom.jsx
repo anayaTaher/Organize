@@ -16,6 +16,8 @@ const Home = () => {
 	
 	const user1 = auth.currentUser.uid
 	
+	const isImage = file => file.name.endsWith("jpeg") || file.name.endsWith("heif") || file.name.endsWith("png") || file.name.endsWith("gif") || file.name.endsWith("svg")
+	
 	useEffect(() => {
 		const usersRef = collection(db, "users")
 		const q = query(usersRef)
@@ -59,8 +61,7 @@ const Home = () => {
 		let url
 		let fileRef
 		if (file) {
-			if (file.name.endsWith("jpeg") || file.name.endsWith("heif") || file.name.endsWith("png") ||
-				file.name.endsWith("gif") || file.name.endsWith("svg")) {
+			if (isImage(file)) {
 				fileRef = ref(storage, `images/${new Date().getTime()} - ${file.name}`)
 			} else {
 				fileRef = ref(storage, `files/${new Date().getTime()} - ${file.name}`)

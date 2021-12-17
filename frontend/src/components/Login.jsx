@@ -13,7 +13,7 @@ import Container from "@mui/material/Container"
 import {createTheme, ThemeProvider} from "@mui/material/styles"
 import {buttonsContainer, forgotPassword, h4, socialButtons, span} from "./signInUp-style"
 import {auth, db} from "../firebase"
-import firebase from 'firebase/compat/app';
+import firebase from 'firebase/compat/app'
 import axios from "axios"
 import {Alert} from "@mui/material"
 import {useForm} from "react-hook-form"
@@ -32,11 +32,12 @@ export default function Login() {
 	
 	const saveAdditionalInfoToFirebaseAndMongoDB = (cred) => {
 		const names = cred.user.displayName.split(" ")
-		db.collection('users').doc(cred.user.uid).set({
+		db.collection('users').doc(cred.user.uid).update({
 			firstName: names[0],
 			lastName: names[1],
 			username: names[1].toLowerCase() + names[0].charAt(0).toUpperCase() + names[0].slice(1).toLowerCase(),
-			isOnline: true
+			isOnline: true,
+			avatar: cred.user.photoURL ? cred.user.photoURL : null
 		}).then(() => history.push("/chat-room"))
 	}
 	
@@ -63,7 +64,7 @@ export default function Login() {
 			setErr(res.data)
 			if (res.data === 2) {
 				auth.signInWithEmailAndPassword(email, password).then(cred => {
-					db.collection('users').doc(cred.user.uid).set({isOnline: true}).then(() => history.push("/chat-room"))
+					db.collection('users').doc(cred.user.uid).update({isOnline: true}).then(() => history.push("/chat-room"))
 				})
 			}
 		})

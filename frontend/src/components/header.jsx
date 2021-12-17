@@ -29,6 +29,7 @@ import Settings from "@mui/icons-material/Settings"
 import Logout from "@mui/icons-material/Logout"
 import {auth, db} from "../firebase"
 import {AuthContext} from "./auth"
+import {useHistory} from "react-router-dom"
 
 const HeaderTheme = createTheme({
 	palette: {
@@ -45,9 +46,11 @@ function Header() {
 	const open = Boolean(anchorEl)
 	const handleClick = event => setAnchorEl(event.currentTarget)
 	const handleClose = () => setAnchorEl(null)
+	const history = useHistory()
 	const logout = async () => {
 		await db.collection('users').doc(auth.currentUser.uid).update({isOnline: false})
 		await auth.signOut()
+		history.push("/chat-room")
 	}
 	const {user} = useContext(AuthContext)
 	return (
