@@ -53,6 +53,7 @@ function Header() {
 		history.push("/chat-room")
 	}
 	const {user} = useContext(AuthContext)
+	
 	return (
 		<ThemeProvider theme={HeaderTheme}>
 			<AppBar
@@ -77,14 +78,14 @@ function Header() {
 						>
 							Home
 						</Link>
-						<Link
+						{user && <Link
 							href="/projects"
 							underline="none"
 							variant="h6"
 							sx={{mr: 5, fontWeight: 500}}
 						>
 							Projects
-						</Link>
+						</Link>}
 						<Link
 							href="/contactus"
 							underline="none"
@@ -93,14 +94,23 @@ function Header() {
 						>
 							Contact Us
 						</Link>
-						<Link
+						{user && <Link
 							href="/chat-room"
 							underline="none"
 							variant="h6"
 							sx={{mr: 5, fontWeight: 500}}
 						>
 							Chat Room
-						</Link>
+						</Link>}
+						{user && <Link
+							onClick={() => window.location.href = "http://localhost:4000/"}
+							href="#"
+							underline="none"
+							variant="h6"
+							sx={{mr: 5, fontWeight: 500}}
+						>
+							Video Calling
+						</Link>}
 					</ToolBar>
 					<ToolBar sx={{flexGrow: 1, display: {xs: "flex", md: "none"}}}>
 						<IconButton sx={{mr: 2}} onClick={HandleMobileClose}>

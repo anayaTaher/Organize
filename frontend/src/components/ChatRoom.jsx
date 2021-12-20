@@ -41,10 +41,9 @@ const Home = () => {
 		const msgsRef = collection(db, "messages", id, "chat")
 		const q = query(msgsRef, orderBy("createdAt", "asc"))
 		
-		onSnapshot(q, (querySnapshot) => {
+		onSnapshot(q, querySnapshot => {
 			let msgs = []
 			querySnapshot.forEach(doc => msgs.push(doc.data()))
-			setMsgs(msgs)
 			setMsgs(msgs)
 		})
 		

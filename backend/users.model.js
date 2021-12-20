@@ -94,6 +94,7 @@ exports.changePassword = (id, password) => {
 	
 }
 
+let displayName
 
 exports.checkUserAndEmail = (data) => {
 	return new Promise((resolve, reject) => {
@@ -103,6 +104,7 @@ exports.checkUserAndEmail = (data) => {
 				if (!user) {
 					reject(0) // There is no user matches this email
 				} else {
+					displayName = user.firstName + " " + user.lastName
 					return bcrypt.compare(data.password, user.password)
 				}
 			})
@@ -110,7 +112,7 @@ exports.checkUserAndEmail = (data) => {
 				if (!same) {
 					reject(1) // password is incorrect
 				} else {
-					reject(2) // correct email and password
+					reject(displayName) // correct email and password
 				}
 			})
 			.catch(err => {

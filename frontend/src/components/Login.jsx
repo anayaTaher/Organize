@@ -19,7 +19,6 @@ import {Alert} from "@mui/material"
 import {useForm} from "react-hook-form"
 import {useHistory} from "react-router-dom"
 
-
 const headerStyle = {
 	fontFamily: "sans-serif",
 	fontWeight: "bold",
@@ -41,7 +40,6 @@ export default function Login() {
 		}).then(() => history.push("/chat-room"))
 	}
 	
-	
 	const signInWithGoogle = () => {
 		const provider = new firebase.auth.GoogleAuthProvider()
 		auth.signInWithPopup(provider).then(cred => saveAdditionalInfoToFirebaseAndMongoDB(cred))
@@ -62,9 +60,12 @@ export default function Login() {
 	const onSubmit = data => {
 		axios.post('http://localhost:4000/login', data).then(res => {
 			setErr(res.data)
-			if (res.data === 2) {
+			if (res.data.length > 1) {
 				auth.signInWithEmailAndPassword(email, password).then(cred => {
-					db.collection('users').doc(cred.user.uid).update({isOnline: true}).then(() => history.push("/chat-room"))
+					db.collection('users').doc(cred.user.uid).update({isOnline: true}).then(() => {
+						console.log(res.data)
+						history.push("/chat-room")
+					})
 				})
 			}
 		})

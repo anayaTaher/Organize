@@ -45,7 +45,6 @@ export default function SignUp() {
 		let names
 		if (auto) {
 			names = cred.user.displayName.split(" ")
-			console.log(cred.user.photoURL)
 		}
 		db.collection('users').doc(cred.user.uid).set({
 			firstName: auto ? names[0] : first,
