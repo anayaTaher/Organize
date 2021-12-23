@@ -49,7 +49,7 @@ export default function ForgotPassword() {
 						alignItems: "center"
 					}}
 				>
-					<Avatar sx={{m: 1, bgcolor: "#085DFF", marginTop: "30Px"}}>
+					<Avatar sx={{m: 1, bgcolor: "#26a69a", marginTop: "30Px"}}>
 						<LockOutlinedIcon/>
 					</Avatar>
 					<Typography component="h1" variant="h5" style={headerStyle}>
@@ -82,7 +82,7 @@ export default function ForgotPassword() {
 							type="submit"
 							fullWidth
 							variant="contained"
-							sx={{mt: 3, mb: 2, bgcolor: "#085DFF", padding: "10px"}}
+							sx={{mt: 3, mb: 2, bgcolor: "#26a69a", padding: "10px"}}
 						>
 							Request Password Reset
 						</Button>

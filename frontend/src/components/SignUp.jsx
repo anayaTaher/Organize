@@ -103,7 +103,7 @@ export default function SignUp() {
 					   style={{backgroundColor: "#FFF", paddingBottom: "20px", borderRadius: "5px", marginTop: "-3%"}}>
 				<CssBaseline/>
 				<Box sx={{marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-					<Avatar sx={{m: 1, bgcolor: '#085DFF', marginTop: "30Px"}}><LockOutlinedIcon/></Avatar>
+					<Avatar sx={{m: 1, bgcolor: '#26a69a', marginTop: "30Px"}}><LockOutlinedIcon/></Avatar>
 					<Typography component="h1" variant="h5" style={headerStyle}>Create your account</Typography>
 					<Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{mt: 1}}>
 						<Grid container spacing={2}>
@@ -235,7 +235,7 @@ export default function SignUp() {
 						</Grid>
 						<Button
 							type="submit" fullWidth variant="contained"
-							sx={{mt: 1, mb: 1, bgcolor: "#085DFF", padding: "10px"}}>
+							sx={{mt: 1, mb: 1, bgcolor: "#26a69a", padding: "10px"}}>
 							Sign Up
 						</Button>
 						{err && <Alert
@@ -271,7 +271,7 @@ export default function SignUp() {
 							<Grid item style={{display: "flex", justifyContent: "center", width: "100%"}}>
 								<Typography style={{display: "inline", marginLeft: "-3%"}}>
 									Already have an account?
-									<Link href="/login" style={{cursor: 'pointer'}}>Login</Link>
+									<Link href="/login" style={{cursor: 'pointer'}}> Login</Link>
 								</Typography>
 							</Grid>
 						</Grid>
@@ -285,7 +285,7 @@ export default function SignUp() {
 							autoFocus
 							margin="dense"
 							id="confirmationCode"
-							label="confirmationCode"
+							label="Confirmation Code"
 							type="confirmationCode"
 							fullWidth
 							variant="standard"
