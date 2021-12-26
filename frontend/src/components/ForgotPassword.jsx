@@ -12,6 +12,7 @@ import {createTheme, ThemeProvider} from "@mui/material/styles"
 import axios from "axios"
 import {Alert} from "@mui/material"
 import {useForm} from "react-hook-form"
+import Header from "./header"
 
 
 const headerStyle = {
@@ -29,6 +30,7 @@ export default function ForgotPassword() {
 	
 	return <>
 		<CssBaseline/>
+		<Header flag={true}/>
 		<ThemeProvider theme={createTheme()}>
 			<Container
 				component="main"

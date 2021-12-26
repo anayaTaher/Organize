@@ -20,6 +20,7 @@ import {useForm} from "react-hook-form"
 import {useHistory} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {signIn} from "../reducers/actions/action"
+import Header  from "./header"
 
 const headerStyle = {
 	fontFamily: "sans-serif",
@@ -85,6 +86,7 @@ export default function Login() {
 	
 	return <>
 		<CssBaseline/>
+		<Header flag={true}/>
 		<ThemeProvider theme={createTheme()}>
 			<Container
 				component="main"

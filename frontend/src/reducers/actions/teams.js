@@ -10,3 +10,13 @@ export const addTeam = async (data) => {
         console.log(err);
     }
 }
+
+export const fetchTeams = (data) => async (dispatch) => {
+    try{
+        const res = await axios.post(server + "/fetchTeams", data);
+        dispatch({type: "FETCH_TEAMS", payload: res.data});
+    }
+    catch(err){
+        console.log(err);
+    }
+}

@@ -38,7 +38,6 @@ const App = () => {
 		<ThemeProvider theme={mainTheme}>
 			<AuthProvider>
 				<BrowserRouter>
-					<Header/>
 					<CssBaseline/>
 					<Switch>
 						<Route exact path="/" component={Homepage}/>

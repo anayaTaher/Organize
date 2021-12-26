@@ -17,6 +17,11 @@ import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { green, red } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { createTask } from "../reducers/actions/tasks";
+import { useParams } from "react-router-dom";
+import { fetchTeams } from "../reducers/actions/teams";
+import { fetchTasks } from "../reducers/actions/tasks";
 
 const teamsData = [
   {
@@ -64,6 +69,11 @@ function Subtitle({ number, title, mt = 0 }) {
 }
 
 function NewTaskImp() {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const teams = useSelector((state) => state.teams);
+  const tasks = useSelector((state) => state.tasks);
+
   const [taskData, setTaskData] = React.useState({
     taskName: "",
     taskDescription: "",
@@ -81,16 +91,49 @@ function NewTaskImp() {
   const [subtasks, setSubtasks] = React.useState([]);
 
   React.useEffect(() => {
-    console.log(subtasks);
-  }, [subtasks]);
+    dispatch(fetchTeams({ projectId: params.id }));
+    dispatch(fetchTasks({ projectId: params.id }));
+  }, [dispatch]);
 
-  const [checkedTeams, setCheckedTeams] = React.useState(
-    teamsData.map((team) => ({ ...team, isChecked: false }))
-  );
+  const [checkedTeams, setCheckedTeams] = React.useState([]);
 
-  const [checkedTasks, setCheckedTasks] = React.useState(
-    tasksData.map((task) => ({ ...task, isChecked: false }))
-  );
+  React.useEffect(() => {
+    setCheckedTeams(teams.map((team) => ({ ...team, isChecked: false })));
+  }, [teams]);
+
+  const [checkedTasks, setCheckedTasks] = React.useState([]);
+
+  React.useEffect(() => {
+    setCheckedTasks(tasks.map((task) => ({ ...task, isChecked: false })));
+  }, [tasks]);
+
+  const submitTask = () => {
+    const newSubtasks = subtasks.map((subtask) => {
+      return {
+        name: subtask.subtaskName,
+        weight: subtask.subtaskWeight,
+        inProgress: false,
+        done: false,
+        worker: "0",
+      };
+    });
+    const newTask = {
+      projectId: params.id,
+      name: taskData.taskName,
+      description: taskData.taskDescription,
+      weight: taskData.taskWeight,
+      startDate: taskData.taskStartDate,
+      deadline: taskData.taskDeadline,
+      subtasks: newSubtasks,
+      teams: checkedTeams.filter((team) => {
+        if(team.isChecked) return team._id;
+      }),
+      dependsOn: checkedTasks.filter((task) => {
+        if(task.isChecked) return task._id;
+      }),
+    };
+    dispatch(createTask(newTask));
+  };
 
   const handleSubtaskDataChange = (field) => (event) => {
     if (field === "subtaskWeight") {
@@ -154,7 +197,7 @@ function NewTaskImp() {
   const handleTeamCheckChange = (id) => () => {
     setCheckedTeams(
       checkedTeams.map((team) =>
-        team.id === id ? { ...team, isChecked: !team.isChecked } : team
+        team._id === id ? { ...team, isChecked: !team.isChecked } : team
       )
     );
   };
@@ -162,7 +205,7 @@ function NewTaskImp() {
   const handleTaskCheckChange = (id) => () => {
     setCheckedTasks(
       checkedTasks.map((task) =>
-        task.id === id ? { ...task, isChecked: !task.isChecked } : task
+        task._id === id ? { ...task, isChecked: !task.isChecked } : task
       )
     );
   };
@@ -269,13 +312,30 @@ function NewTaskImp() {
           <Typography variant="body1">Task Deadline</Typography>
         </Grid>
         <Grid xs={2} />
-        <Grid item xs={6} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <Typography variant="h6">Info:</Typography>
           <Typography>Task Name: Minimal info about the task.</Typography>
-          <Typography>Task Description: Everything that has to be explained about the task.</Typography>
-          <Typography>Task Weight: Estimiation about the difficulty of the task.</Typography>
-          <Typography>Task Start Date: The start date to being working on the task.</Typography>
-          <Typography>Task Deadline: The last date to handle the task.</Typography>
+          <Typography>
+            Task Description: Everything that has to be explained about the
+            task.
+          </Typography>
+          <Typography>
+            Task Weight: Estimiation about the difficulty of the task.
+          </Typography>
+          <Typography>
+            Task Start Date: The start date to being working on the task.
+          </Typography>
+          <Typography>
+            Task Deadline: The last date to handle the task.
+          </Typography>
         </Grid>
         <Grid item xs={4}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -438,7 +498,7 @@ function NewTaskImp() {
                     <Grid item container justifyContent="center" xs={2}>
                       <Checkbox
                         checked={team.isChecked}
-                        onChange={handleTeamCheckChange(team.id)}
+                        onChange={handleTeamCheckChange(team._id)}
                       />
                     </Grid>
                   </>
@@ -486,7 +546,7 @@ function NewTaskImp() {
                     <Grid item container justifyContent="center" xs={2}>
                       <Checkbox
                         checked={task.isChecked}
-                        onChange={handleTaskCheckChange(task.id)}
+                        onChange={handleTaskCheckChange(task._id)}
                       />
                     </Grid>
                   </>
@@ -499,7 +559,7 @@ function NewTaskImp() {
       <Box>
         <Grid container padding={2}>
           <Grid item container flexDirection="row-reverse" xs={8}>
-            <Button size="large" variant="contained">
+            <Button size="large" variant="contained" onClick={submitTask}>
               Create Task
             </Button>
           </Grid>

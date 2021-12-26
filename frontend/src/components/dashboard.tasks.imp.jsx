@@ -19,6 +19,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import SortIcon from "@mui/icons-material/Sort";
 import AddIcon from "@mui/icons-material/Add";
 import { useHistory, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTasks } from "../reducers/actions/tasks";
+import { fetchTeams } from "../reducers/actions/teams";
 
 const date1 = new Date(2021, 10, 20);
 const date2 = new Date(2022, 5, 1);
@@ -62,6 +65,9 @@ const data = [
 function TasksImp() {
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.tasks);
+  const teams = useSelector((state) => state.teams);
   const [sortBy, setSortBy] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
   const handleSortByChange = (event) => {
@@ -82,6 +88,16 @@ function TasksImp() {
     });
     return sortedData;
   }, [data, sortBy, searchValue]);
+
+  React.useEffect(() => {
+    dispatch(fetchTasks({ projectId: params.id }));
+    dispatch(fetchTeams({ projectId: params.id }));
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    console.log(tasks, teams);
+  }, [tasks, teams]);
+
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
@@ -147,7 +163,7 @@ function TasksImp() {
           </Grid>
           <Grid item xs={1} />
         </Grid>
-        {DisplayedTasks.map((item) => {
+        {/* {DisplayedTasks.map((item) => {
           return (
             <TaskRow
               taskName={item.taskName}
@@ -156,6 +172,19 @@ function TasksImp() {
               taskWeight={item.taskWeight}
               taskState={item.taskState}
               taskTeam={item.taskTeam}
+            />
+          );
+        })} */}
+        {tasks.map((task) => {
+          return (
+            <TaskRow
+              taskName={task.name}
+              taskDeadline={task.deadline}
+              taskProgress={0}
+              taskWeight={task.weight}
+              taskState={"inProgress"}
+              taskTeam={task.teams}
+              allTeams={teams}
             />
           );
         })}
@@ -169,7 +198,10 @@ function TasksImp() {
           <Typography variant="h6" sx={{ color: "#708090" }}>
             Create a new task
           </Typography>
-          <IconButton sx={{ border: 1, mt: 2, color: "#708090" }} onClick={()=>history.push(`/projects/${params.id}/newTask`)}>
+          <IconButton
+            sx={{ border: 1, mt: 2, color: "#708090" }}
+            onClick={() => history.push(`/projects/${params.id}/newTask`)}
+          >
             <AddIcon />
           </IconButton>
         </Grid>

@@ -27,6 +27,7 @@ function TaskRow(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
   const open = Boolean(anchorEl);
+  const date = new Date(Date.parse(props.taskDeadline));
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -70,7 +71,8 @@ function TaskRow(props) {
       taskTeam.push(<Chip variant="filled" label={remainingTeams} />);
       break;
     }
-    taskTeam.push(<Chip variant="outlined" label={props.taskTeam[i]} />);
+    console.log(props.allTeams);
+    taskTeam.push(<Chip variant="outlined" label={props.allTeams.find(team => team._id === props.taskTeam[i]).name} />);
   }
 
   return (
@@ -109,7 +111,7 @@ function TaskRow(props) {
         </Grid>
         <Grid item container justifyContent="center" xs={1.5}>
           <Typography variant="body1" sx={{ color: "#708090" }}>
-            {props.taskDeadline.toDateString()}
+            {`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}
           </Typography>
         </Grid>
         <Grid item container justifyContent="center" xs={1}>

@@ -25,7 +25,7 @@ router.post("/fetchTeams", async (req, res) => {
     try{
         const projectId = req.body.projectId;
         const doc = await ProjectModel.findOne({_id: projectId});
-        const {teams} = doc._doc;
+        const {teams} = doc;
         res.status(200).json(teams);
     }
     catch(err){

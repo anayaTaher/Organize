@@ -9,12 +9,12 @@ import {
   Checkbox,
 } from "@mui/material";
 import Navbar from "./dashboard.navbar";
-import Header from "./dashboard.header";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContributors } from "../reducers/actions/contributors";
 import { useParams } from "react-router-dom";
 import { addTeam } from "../reducers/actions/teams";
+import Header from "./header";
 
 function NewTeamDetails({ checkList }) {
   const [teamName, setTeamName] = React.useState("");
@@ -100,6 +100,7 @@ function NewTeam() {
   const HandleMobileClose = () => setMobileOpen(!mobileOpen);
   return (
     <>
+      <Header flag={false} />
       <Box component="div" sx={{ display: "flex" }}>
         <Navbar mobileOpen={mobileOpen} HandleMobileClose={HandleMobileClose} />
         <Box

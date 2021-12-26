@@ -25,7 +25,7 @@ import {auth, db} from "../firebase"
 import firebase from "firebase/compat/app"
 import {useDispatch, useSelector} from "react-redux"
 import {signIn} from "../reducers/actions/action"
-
+import Header from "./header";
 export default function SignUp() {
 	
 	const [first, setFirst] = useState("")
@@ -114,6 +114,7 @@ export default function SignUp() {
 	
 	return <>
 		<ThemeProvider theme={createTheme()}>
+		<Header flag={true}/>
 			<Container component="main" maxWidth="xs"
 					   style={{backgroundColor: "#FFF", paddingBottom: "20px", borderRadius: "5px", marginTop: "-3%"}}>
 				<CssBaseline/>

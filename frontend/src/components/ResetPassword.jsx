@@ -14,6 +14,7 @@ import {headerStyle} from "./signInUp-style"
 import {useForm} from "react-hook-form"
 import axios from "axios"
 import {useHistory, useParams} from "react-router-dom"
+import Header from "./header"
 
 export default function ResetPassword() {
 	
@@ -44,6 +45,7 @@ export default function ResetPassword() {
 	
 	return <>
 		<ThemeProvider theme={createTheme()}>
+		<Header flag={true}/>
 			<Container component="main" maxWidth="xs"
 					   style={{backgroundColor: "#FFF", paddingBottom: "20px", borderRadius: "5px", marginTop: "-3%"}}>
 				<CssBaseline/>

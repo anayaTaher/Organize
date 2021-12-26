@@ -4,6 +4,7 @@ import ProjectsMain from "./projects.main";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Footer from "./footer";
+import Header from "./header";
 
 let mainTheme = createTheme({
   typography: { fontFamily: "Roboto" },
@@ -19,6 +20,7 @@ function Projects() {
     <>
       <ThemeProvider theme={mainTheme}>
         <CssBaseline />
+        <Header flag={true} />
         <ProjectsMain />
         <Footer />
       </ThemeProvider>

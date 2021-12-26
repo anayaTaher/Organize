@@ -6,6 +6,7 @@ import Cards from "./Cards"
 import {createTheme, ThemeProvider} from "@mui/material/styles"
 import {Box} from "@mui/system"
 import Footer from "./footer"
+import Header from "./header";
 
 let mainTheme = createTheme({
 	typography: {fontFamily: "Roboto"},
@@ -20,6 +21,7 @@ function Homepage() {
 	return (
 		<>
 			<ThemeProvider theme={mainTheme}>
+			<Header flag={true}/>
 				<CssBaseline/>
 				<Banner/>
 				<Box sx={{m: 2, p: 5}}>
