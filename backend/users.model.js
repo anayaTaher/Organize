@@ -71,6 +71,7 @@ exports.checkIfUserIsExist = (email) => {
 	})
 	
 }
+
 exports.changePassword = (id, password) => {
 	
 	return new Promise((resolve, reject) => {
@@ -120,3 +121,5 @@ exports.checkUserAndEmail = (data) => {
 			})
 	})
 }
+
+exports.template = mongoose.model("user", userTemplate)

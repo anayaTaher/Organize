@@ -84,6 +84,7 @@ router.post('/forgotPassword', async (request, response) => {
 	})
 	
 })
+
 router.post('/reset-password/:id/:token', async (request, response) => {
 	
 	if (request.body.flag == 0) {
@@ -100,5 +101,47 @@ router.post('/reset-password/:id/:token', async (request, response) => {
 	}
 })
 
+router.post("/loginAuth", async (req, res) => {
+	const {password, email} = req.body
+	try {
+		const account = await usersModel.template.findOne({email})
+		if (!account) {
+			return res.status(404).json({message: "User does not exist"})
+		}
+		const isPasswordCorrect = await bcrypt.compare(password, account.password)
+		if (!isPasswordCorrect) {
+			return res.status(400).json({message: "Invalid password"})
+		}
+		const token = jwt.sign({email, id: account._id}, "verysecret", {
+			expiresIn: "12h"
+		})
+		console.log(token, email)
+		const {accountPassword, ...userData} = account._doc
+		res.status(201).json({token, userData})
+	} catch (error) {
+		console.log(error)
+	}
+})
+
+router.post("/getName", async (req, res) => {
+	try {
+		const decodedData = jwt.verify(req.body.token, "verysecret")
+		const user = await usersModel.template.findOne({email: decodedData.email})
+		res.status(200).json({email: user.email})
+		console.log(user.email)
+	} catch (err) {
+		console.log(err)
+	}
+})
+
+router.post("/getAccountData", async (req, res) => {
+	try {
+		const decodedData = jwt.verify(req.body.token, "verysecret")
+		const account = await usersModel.template.findOne({email: decodedData.email})
+		res.json(account._doc)
+	} catch (err) {
+		console.log(err)
+	}
+})
 
 module.exports = router
