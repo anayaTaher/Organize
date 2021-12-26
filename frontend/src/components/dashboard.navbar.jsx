@@ -23,6 +23,12 @@ import NavigateIcon from "@mui/icons-material/Navigation";
 import Logo from "./../assets/logo/logo.png";
 import ProjectImage from "./../assets/images/fb.png";
 import { Box } from "@mui/system";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import AddIcon from "@mui/icons-material/Add";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import GroupsIcon from "@mui/icons-material/Groups";
 const React = require("react");
 
 const drawerWidth = 280;
@@ -33,150 +39,73 @@ const drawerItems = [
     icon: AnnouncementIcon,
     isBadge: true,
     badgeContent: 2,
+    href: "announcements",
+  },
+  {
+    text: "Calendar",
+    icon: CalendarTodayIcon,
+    isBadge: false,
+    href: "",
   },
   {
     text: "Tasks",
     icon: TaskIcon,
     isBadge: false,
     badgeContent: 0,
+    href: "tasks",
   },
   {
-    text: "Settings",
-    icon: SettingsIcon,
+    text: "New Task",
+    icon: AddIcon,
     isBadge: false,
-    badgeContent: 0,
+    href: "newTask",
   },
+
+  // {
+  //   text: "Settings",
+  //   icon: SettingsIcon,
+  //   isBadge: false,
+  //   badgeContent: 0,
+  //   href: "#",
+  // },
   {
     text: "Contributors",
+    icon: GroupsIcon,
+    isBadge: false,
+    badgeContent: 0,
+    href: "contributors",
+  },
+  {
+    text: "Teams",
     icon: ContributorsIcon,
     isBadge: false,
-    badgeContent: 0,
+    href: "teams",
   },
   {
-    text: "About Project",
-    icon: AboutProjectIcon,
+    text: "New Team",
+    icon: GroupAddIcon,
     isBadge: false,
-    badgeContent: 0,
+    href: "newTeam",
   },
-  {
-    text: "Project Reports",
-    icon: ProjectReportsIcon,
-    isBadge: false,
-    badgeContent: 0,
-  },
+  // {
+  //   text: "About Project",
+  //   icon: AboutProjectIcon,
+  //   isBadge: false,
+  //   badgeContent: 0,
+  //   href: "#",
+  // },
+  // {
+  //   text: "Project Reports",
+  //   icon: ProjectReportsIcon,
+  //   isBadge: false,
+  //   badgeContent: 0,
+  //   href: "#",
+  // },
 ];
 
-const getDrawerListItems = (drawerItems) => {
-  return drawerItems.map((item) => (
-    <ListItem key={item} sx={{ pb: 0, pt: 0 }}>
-      <ListItemButton>
-        <ListItemIcon>
-          {item.isBadge ? (
-            <>
-              <Badge variant="dot" badgeContent={2} color="error">
-                <item.icon sx={{ color: "#708090" }} />
-              </Badge>
-            </>
-          ) : (
-            <item.icon sx={{ color: "#708090" }} />
-          )}
-        </ListItemIcon>
-        <ListItemText sx={{ color: "#708090" }} primary={item.text} />
-      </ListItemButton>
-    </ListItem>
-  ));
-};
-
-const drawer = (
-  <>
-    <Divider />
-    <List dense={true}>
-      <ListItem>
-        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <ProjectDetailsIcon
-            sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
-          />
-          <Typography variant="overline" sx={{ color: "#708090" }}>
-            Project Details
-          </Typography>
-          <Divider variant="middle" sx={{ flexGrow: 1 }} />
-        </Box>
-      </ListItem>
-      <List dense={true}>
-        <ListItem>
-          <Box
-            sx={{ display: "flex", alignItems: "center", mb: 2, width: "100%" }}
-          >
-            <Avatar src={ProjectImage} sx={{ mr: 2 }} />
-            <Typography variant="h6" sx={{ color: "#708090", fontWeight: 'bold' }} noWrap>
-              Facebook
-            </Typography>
-          </Box>
-        </ListItem>
-        <ListItem>
-          <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-            <Typography variant="button" sx={{ color: "#708090", mr: 2 }}>
-              Progress
-            </Typography>
-            <LinearProgress
-              sx={{ flexGrow: 1 }}
-              variant="determinate"
-              value={37}
-            />
-          </Box>
-        </ListItem>
-        <ListItem>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="button" sx={{ color: "#708090" }}>
-              Tasks Finished
-            </Typography>
-            <Typography variant="overline" sx={{ color: "#708090" }}>
-              20/61
-            </Typography>
-          </Box>
-        </ListItem>
-        <ListItem>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="button" sx={{ color: "#708090" }}>
-              Deadline
-            </Typography>
-            <Typography variant="overline" sx={{ color: "#708090" }}>
-              2nd Oct 2021
-            </Typography>
-          </Box>
-        </ListItem>
-      </List>
-      <ListItem sx={{ mb: 2 }}>
-        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-          <NavigateIcon
-            sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
-          />
-          <Typography variant="overline" sx={{ color: "#708090" }}>
-            Navigate
-          </Typography>
-          <Divider variant="middle" sx={{ flexGrow: 1 }} />
-        </Box>
-      </ListItem>
-      {getDrawerListItems(drawerItems)}
-    </List>
-  </>
-);
-
 function Navbar(props) {
+  const navigate = useNavigate();
+  const params = useParams();
   return (
     <>
       <Drawer
@@ -198,7 +127,120 @@ function Navbar(props) {
           />
           <Typography variant="h6">Organize</Typography>
         </Toolbar>
-        {drawer}
+        <Divider />
+        <List dense={true}>
+          <ListItem>
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <ProjectDetailsIcon
+                sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+              />
+              <Typography variant="overline" sx={{ color: "#708090" }}>
+                Project Details
+              </Typography>
+              <Divider variant="middle" sx={{ flexGrow: 1 }} />
+            </Box>
+          </ListItem>
+          <List dense={true}>
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mb: 2,
+                  width: "100%",
+                }}
+              >
+                <Avatar src={ProjectImage} sx={{ mr: 2 }} />
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#708090", fontWeight: "bold" }}
+                  noWrap
+                >
+                  Facebook
+                </Typography>
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "100%" }}
+              >
+                <Typography variant="button" sx={{ color: "#708090", mr: 2 }}>
+                  Progress
+                </Typography>
+                <LinearProgress
+                  sx={{ flexGrow: 1 }}
+                  variant="determinate"
+                  value={37}
+                />
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="button" sx={{ color: "#708090" }}>
+                  Tasks Finished
+                </Typography>
+                <Typography variant="overline" sx={{ color: "#708090" }}>
+                  20/61
+                </Typography>
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="button" sx={{ color: "#708090" }}>
+                  Deadline
+                </Typography>
+                <Typography variant="overline" sx={{ color: "#708090" }}>
+                  2nd Oct 2021
+                </Typography>
+              </Box>
+            </ListItem>
+          </List>
+          <ListItem sx={{ mb: 2 }}>
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <NavigateIcon
+                sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+              />
+              <Typography variant="overline" sx={{ color: "#708090" }}>
+                Navigate
+              </Typography>
+              <Divider variant="middle" sx={{ flexGrow: 1 }} />
+            </Box>
+          </ListItem>
+          {drawerItems.map((item) => (
+            <ListItem key={item} sx={{ pb: 0, pt: 0 }}>
+              <ListItemButton
+                onClick={() => navigate(`/projects/${params.id}/${item.href}`)}
+              >
+                <ListItemIcon>
+                  {item.isBadge ? (
+                    <>
+                      <Badge variant="dot" badgeContent={2} color="error">
+                        <item.icon sx={{ color: "#708090" }} />
+                      </Badge>
+                    </>
+                  ) : (
+                    <item.icon sx={{ color: "#708090" }} />
+                  )}
+                </ListItemIcon>
+                <ListItemText sx={{ color: "#708090" }} primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
       <Drawer
         variant="temporary"
@@ -209,7 +251,120 @@ function Navbar(props) {
         open={props.mobileOpen}
         onClose={props.HandleMobileClose}
       >
-        {drawer}
+        <Divider />
+        <List dense={true}>
+          <ListItem>
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <ProjectDetailsIcon
+                sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+              />
+              <Typography variant="overline" sx={{ color: "#708090" }}>
+                Project Details
+              </Typography>
+              <Divider variant="middle" sx={{ flexGrow: 1 }} />
+            </Box>
+          </ListItem>
+          <List dense={true}>
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mb: 2,
+                  width: "100%",
+                }}
+              >
+                <Avatar src={ProjectImage} sx={{ mr: 2 }} />
+                <Typography
+                  variant="h6"
+                  sx={{ color: "#708090", fontWeight: "bold" }}
+                  noWrap
+                >
+                  Facebook
+                </Typography>
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box
+                sx={{ display: "flex", alignItems: "center", width: "100%" }}
+              >
+                <Typography variant="button" sx={{ color: "#708090", mr: 2 }}>
+                  Progress
+                </Typography>
+                <LinearProgress
+                  sx={{ flexGrow: 1 }}
+                  variant="determinate"
+                  value={37}
+                />
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="button" sx={{ color: "#708090" }}>
+                  Tasks Finished
+                </Typography>
+                <Typography variant="overline" sx={{ color: "#708090" }}>
+                  20/61
+                </Typography>
+              </Box>
+            </ListItem>
+            <ListItem>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Typography variant="button" sx={{ color: "#708090" }}>
+                  Deadline
+                </Typography>
+                <Typography variant="overline" sx={{ color: "#708090" }}>
+                  2nd Oct 2021
+                </Typography>
+              </Box>
+            </ListItem>
+          </List>
+          <ListItem sx={{ mb: 2 }}>
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <NavigateIcon
+                sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+              />
+              <Typography variant="overline" sx={{ color: "#708090" }}>
+                Navigate
+              </Typography>
+              <Divider variant="middle" sx={{ flexGrow: 1 }} />
+            </Box>
+          </ListItem>
+          {drawerItems.map((item) => (
+            <ListItem key={item} sx={{ pb: 0, pt: 0 }}>
+              <ListItemButton
+                onClick={() => navigate(`/projects/${params.id}/${item.href}`)}
+              >
+                <ListItemIcon>
+                  {item.isBadge ? (
+                    <>
+                      <Badge variant="dot" badgeContent={2} color="error">
+                        <item.icon sx={{ color: "#708090" }} />
+                      </Badge>
+                    </>
+                  ) : (
+                    <item.icon sx={{ color: "#708090" }} />
+                  )}
+                </ListItemIcon>
+                <ListItemText sx={{ color: "#708090" }} primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </Drawer>
     </>
   );

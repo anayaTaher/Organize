@@ -1,5 +1,7 @@
 import { Typography, LinearProgress, Tooltip } from "@mui/material";
 import { Box, flexbox } from "@mui/system";
+import { linearProgressClasses } from "@mui/material/LinearProgress";
+import { styled } from "@mui/material/styles";
 
 function CalenderDay({
   monthName,
@@ -7,6 +9,7 @@ function CalenderDay({
   radiusPosition,
   tasksBlock,
   noTask,
+  isToday,
 }) {
   let boxBorderRadius = "0 0 0 0";
   switch (radiusPosition) {
@@ -39,6 +42,27 @@ function CalenderDay({
     progressBorderRadius.push(taskProgressBorderRadius);
   });
 
+  const getColor = (taskState) => {
+    let color = "green";
+    switch (taskState) {
+      case "inProgress":
+        color = "dodgerblue";
+        break;
+      case "behind":
+        color = "red";
+        break;
+      case "onHold":
+        color = "orange";
+        break;
+      case "notStarted":
+        color = "lightgray"
+        break;
+      default:
+        break;
+    }
+    return color;
+  };
+
   return (
     <>
       <Box
@@ -47,8 +71,10 @@ function CalenderDay({
           flexDirection: "column",
           width: "100%",
           border: 1,
+          borderColor: "black",
           minHeight: "150px",
           borderRadius: boxBorderRadius,
+          boxShadow: isToday ? "0px 0px 0px 3px lightseagreen inset" : "",
         }}
       >
         <Box
@@ -67,18 +93,23 @@ function CalenderDay({
           </Typography>
           <Typography variant="h4">{monthDay}</Typography>
         </Box>
-        {tasksBlock.map((taskBlock, i) => {
-          console.log(monthDay, monthName);
+        {tasksBlock.map((task, i) => {
           return (
-            <Tooltip key={i} title={taskBlock.taskName}>
+            <Tooltip key={i} title={task.taskName}>
               <LinearProgress
                 sx={{
                   height: 10,
-                  ml: taskBlock.isFirstDay ? { xs: 2, md: 4 } : 0,
-                  mr: taskBlock.isLastDay ? { xs: 2, md: 4 } : 0,
+                  ml: task.isFirstDay ? { xs: 2, md: 4 } : 0,
+                  mr: task.isLastDay ? { xs: 2, md: 4 } : 0,
                   mb: 2,
                   borderRadius: progressBorderRadius[i],
-                  opacity: taskBlock.isVisible ? '100%' : '0%'
+                  opacity: task.isVisible ? "100%" : "0%",
+                  [`&.${linearProgressClasses.colorPrimary}`]: {
+                    backgroundColor: getColor(task.taskState),
+                  },
+                  [`& .${linearProgressClasses.bar}`]: {
+                    backgroundColor: getColor(task.taskState),
+                  },
                 }}
                 value={100}
                 variant="determinate"

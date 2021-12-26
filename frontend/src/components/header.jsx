@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Avatar,
   IconButton,
@@ -12,6 +12,8 @@ import {
   MenuItem,
   Menu,
   ListItemIcon,
+  Typography,
+  Button,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -27,6 +29,13 @@ import ContactUsIcon from "@mui/icons-material/Phone";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
+import { useSelector, useDispatch, useStore } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { fetchName } from "../reducers/actions/action";
+import axios from "axios";
+import jwt from "jsonwebtoken";
+import UserSettings from "./header.userSettings";
+import { getAccountData } from "../reducers/actions/action";
 
 const HeaderTheme = createTheme({
   palette: {
@@ -37,18 +46,40 @@ const HeaderTheme = createTheme({
 });
 
 function Header() {
+  const token = JSON.parse(localStorage.getItem("token"));
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const HandleMobileClose = () => {
     setMobileOpen(!mobileOpen);
   };
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+
+  const isLoggedIn = () => {
+    const token = localStorage.getItem("token");
+    if (token) return true;
+    return false;
   };
-  const handleClose = () => {
-    setAnchorEl(null);
+
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    dispatch({ type: "LOGOUT" });
   };
+
+  React.useEffect(() => {
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      if (!token) {
+        return;
+      }
+      const decodedAccount = jwt.decode(token.token);
+      if (decodedAccount.exp * 1000 < new Date().getTime()) {
+        logOut();
+        return;
+      }
+      dispatch(getAccountData());
+    } catch (err) {
+      console.log(err);
+    }
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={HeaderTheme}>
@@ -60,6 +91,12 @@ function Header() {
         }}
       >
         <ToolBar>
+          <IconButton
+            sx={{ mr: 2, display: { xs: "block", md: "none" } }}
+            onClick={HandleMobileClose}
+          >
+            <MenuIcon />
+          </IconButton>
           <ToolBar sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Avatar
               src={Logo}
@@ -91,33 +128,7 @@ function Header() {
               Contact Us
             </Link>
           </ToolBar>
-          <ToolBar sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton sx={{ mr: 2 }} onClick={HandleMobileClose}>
-              <MenuIcon />
-            </IconButton>
-            <Avatar
-              src={Logo}
-              alt="/o/"
-              sx={{ mr: 5, height: 50, width: 50 }}
-            />
-          </ToolBar>
-          <ToolBar sx={{ justifyContent: "flex-end" }}>
-            <IconButton sx={{ mr: 1, color: "#708090" }}>
-              <Badge badgeContent={4} color="error">
-                <Notifications />
-              </Badge>
-            </IconButton>
-            <IconButton sx={{ mr: 2, color: "#708090" }}>
-              <Badge badgeContent={4} color="error">
-                <Mail />
-              </Badge>
-            </IconButton>
-            <Tooltip title="Account settings">
-              <IconButton onClick={handleClick}>
-                <Avatar src={Logo} alt="/o/" />
-              </IconButton>
-            </Tooltip>
-          </ToolBar>
+          {isLoggedIn() ? <UserSettings /> : <Button />}
         </ToolBar>
       </AppBar>
       <Drawer
@@ -158,66 +169,6 @@ function Header() {
           </Link>
         </List>
       </Drawer>
-      <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            overflow: "visible",
-            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-            mt: 1.5,
-            "& .MuiAvatar-root": {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
-            "&:before": {
-              content: '""',
-              display: "block",
-              position: "absolute",
-              top: 0,
-              right: 23,
-              width: 10,
-              height: 10,
-              bgcolor: "background.paper",
-              transform: "translateY(-50%) rotate(45deg)",
-              zIndex: 0,
-            },
-          },
-        }}
-        transformOrigin={{ horizontal: "right", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-      >
-        <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem>
-          <Avatar /> My Account
-        </MenuItem>
-        <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add Another Account
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Settings
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
     </ThemeProvider>
   );
 }

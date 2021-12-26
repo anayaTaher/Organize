@@ -7,9 +7,8 @@ import {
   Card,
   Avatar,
 } from "@mui/material";
-import Facebook from "./../assets/images/fb.png";
 
-function ProjectCard() {
+function ProjectCard({ name, img, projectID }) {
   return (
     <>
       <Box
@@ -29,6 +28,7 @@ function ProjectCard() {
             justifyContent: "center",
             color: "black",
           }}
+          href={window.location.href + "/" + projectID}
         >
           <CardContent>
             <Box
@@ -37,8 +37,10 @@ function ProjectCard() {
                 alignItems: "center",
               }}
             >
-              <Avatar src={Facebook} sx={{ height: 150, width: 150, mb: 5 }} />
-              <Typography variant="h6" textAlign="center">Facebook</Typography>
+              <Avatar src={img} sx={{ height: 150, width: 150, mb: 5 }} />
+              <Typography variant="h6" textAlign="center">
+                {name}
+              </Typography>
             </Box>
           </CardContent>
         </CardActionArea>

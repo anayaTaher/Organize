@@ -18,6 +18,7 @@ import TaskRow from "./dashboard.tasks.taskRow";
 import SearchIcon from "@mui/icons-material/Search";
 import SortIcon from "@mui/icons-material/Sort";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate, useParams } from "react-router-dom";
 
 const date1 = new Date(2021, 10, 20);
 const date2 = new Date(2022, 5, 1);
@@ -59,6 +60,8 @@ const data = [
 ];
 
 function TasksImp() {
+  const navigate = useNavigate();
+  const params = useParams();
   const [sortBy, setSortBy] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
   const handleSortByChange = (event) => {
@@ -166,7 +169,7 @@ function TasksImp() {
           <Typography variant="h6" sx={{ color: "#708090" }}>
             Create a new task
           </Typography>
-          <IconButton sx={{ border: 1, mt: 2, color: "#708090" }}>
+          <IconButton sx={{ border: 1, mt: 2, color: "#708090" }} onClick={()=>navigate(`/projects/${params.id}/newTask`)}>
             <AddIcon />
           </IconButton>
         </Grid>

@@ -2,9 +2,22 @@ import React from "react";
 import { Box, Typography, IconButton, TextField, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ImageIcon from "@mui/icons-material/Image";
+import { useDispatch } from "react-redux";
+import {createProject} from "../reducers/actions/projects";
 
 function CreateProject() {
   const [create, setCreate] = React.useState(false);
+  const [projectData, setProjectData] = React.useState({
+    name: "",
+    image: ""
+  });
+  const handleChange = (field) => (event) => {
+    setProjectData({...projectData, [field]: event.target.value});
+  }
+  const dispatch = useDispatch();
+  const handleCreate = () => {
+    dispatch(createProject(projectData));
+  };
 
   return (
     <>
@@ -46,6 +59,8 @@ function CreateProject() {
               sx={{ width: "80%", mb: 5 }}
               size="small"
               label="Project Name"
+              value={projectData.name}
+              onChange={handleChange('name')}
             ></TextField>
             <Button
               sx={{
@@ -57,6 +72,7 @@ function CreateProject() {
                 width: "60%",
                 mb: 1,
               }}
+              onClick={handleCreate}
             >
               Create
             </Button>

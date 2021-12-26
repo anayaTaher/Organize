@@ -84,7 +84,7 @@ function NewAnnouncement() {
             >
               <Avatar
                 src={
-                  "https://cdn.discordapp.com/avatars/124597608898363393/8a4e70e67a860770048da99bedbc4616.png?size=256"
+                  "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
                 }
                 sx={{ height: 50, width: 50 }}
               />
@@ -108,7 +108,7 @@ function NewAnnouncement() {
                   }}
                 >
                   <Typography variant="body1" fontWeight={500}>
-                    shardex
+                    user
                   </Typography>
                 </Link>
                 <Typography variant="body2" sx={{ color: "#708090" }}>

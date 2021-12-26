@@ -55,6 +55,10 @@ function TaskRow(props) {
       taskIcon = <MoreHorizIcon sx={{ color: "orange" }} />;
       taskTooltipTitle = "Prerequisit task is behind the schedule!";
       break;
+    case "notStarted":
+      taskIcon = <MoreHorizIcon sx={{ color: "lightgray" }} />;
+      taskTooltipTitle = "Task has not been worked on yet";
+      break;
     default:
       break;
   }

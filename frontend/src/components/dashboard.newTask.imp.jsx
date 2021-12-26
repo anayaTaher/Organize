@@ -69,6 +69,7 @@ function NewTaskImp() {
     taskDescription: "",
     taskWeight: 0,
     taskDeadline: new Date(),
+    taskStartDate: new Date(),
   });
 
   const [subtaskData, setSubtaskData] = React.useState({
@@ -110,7 +111,7 @@ function NewTaskImp() {
   };
 
   const handleNewTaskDataChange = (field) => (event) => {
-    if (field === "taskDeadline") {
+    if (field === "taskDeadline" || field === "taskStartDate") {
       setTaskData({ ...taskData, [field]: event }); //event is the new date value
       return;
     }
@@ -211,7 +212,7 @@ function NewTaskImp() {
           />
         </Grid>
         <Grid item container xs={4} alignItems="center" justifyContent="center">
-          <Typography variant="body1">Task Deadline</Typography>
+          <Typography variant="body1">Task Start Date</Typography>
         </Grid>
         <Grid
           item
@@ -236,8 +237,8 @@ function NewTaskImp() {
         <Grid item xs={4}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <CalendarPicker
-              date={taskData.taskDeadline}
-              onChange={handleNewTaskDataChange("taskDeadline")}
+              date={taskData.taskStartDate}
+              onChange={handleNewTaskDataChange("taskStartDate")}
             />
           </LocalizationProvider>
         </Grid>
@@ -263,6 +264,26 @@ function NewTaskImp() {
               shrink: true,
             }}
           />
+        </Grid>
+        <Grid item container xs={4} alignItems="center" justifyContent="center">
+          <Typography variant="body1">Task Deadline</Typography>
+        </Grid>
+        <Grid xs={2} />
+        <Grid item xs={6} sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+          <Typography variant="h6">Info:</Typography>
+          <Typography>Task Name: Minimal info about the task.</Typography>
+          <Typography>Task Description: Everything that has to be explained about the task.</Typography>
+          <Typography>Task Weight: Estimiation about the difficulty of the task.</Typography>
+          <Typography>Task Start Date: The start date to being working on the task.</Typography>
+          <Typography>Task Deadline: The last date to handle the task.</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <CalendarPicker
+              date={taskData.taskDeadline}
+              onChange={handleNewTaskDataChange("taskDeadline")}
+            />
+          </LocalizationProvider>
         </Grid>
       </Grid>
       <Subtitle number={2} title={"Sub Tasks"} mt={4} />

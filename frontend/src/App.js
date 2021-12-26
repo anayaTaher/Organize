@@ -6,6 +6,7 @@ import Cards from "./components/Cards";
 import Header from "./components/dashboard.header";
 import Navbar from "./components/dashboard.navbar";
 import Announcements from "./components/dashboard.announcements";
+import NewTeam from "./components/dashboard.newTeam";
 import Schedule from "./components/dashboard.schedule";
 import Projects from "./components/projects";
 import ContactUs from "./components/ContactUs";
@@ -25,6 +26,7 @@ import Contributors from "./components/dashboard.contributors";
 import Tasks from "./components/dashboard.tasks";
 import NewTask from "./components/dashboard.newTask";
 import { teal } from "@mui/material/colors";
+import Announcement from "@mui/icons-material/Announcement";
 
 let mainTheme = createTheme({
   typography: { fontFamily: "Roboto" },
@@ -38,9 +40,6 @@ let mainTheme = createTheme({
 mainTheme = responsiveFontSizes(mainTheme);
 
 function App() {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const HandleMobileClose = () => setMobileOpen(!mobileOpen);
-
   return (
     <>
       <ThemeProvider theme={mainTheme}>
@@ -52,6 +51,12 @@ function App() {
             <Route path="/signup" element={<SignUp/>} />
             <Route path="/contactus" element={<ContactUs/>} />
             <Route path="/chattingroom" element={<Chat/>} />
+            <Route path="/projects/:id" element={<Schedule/>} />
+            <Route path="/projects/:id/announcements" element={<Announcements/>} />
+            <Route path="/projects/:id/tasks" element={<Tasks/>} />
+            <Route path="/projects/:id/contributors" element={<Contributors/>} />
+            <Route path="/projects/:id/newTask" element={<NewTask/>} />
+            <Route path="/projects/:id/newTeam" element={<NewTeam/>} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

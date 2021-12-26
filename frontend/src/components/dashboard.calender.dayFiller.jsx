@@ -1,7 +1,7 @@
 import { Typography, LinearProgress, Tooltip } from "@mui/material";
 import { Box, flexbox } from "@mui/system";
 
-function CalenderDay({radiusPosition}) {
+function CalenderDay({ radiusPosition, tasksInWeek }) {
   let boxBorderRadius = "0 0 0 0";
   switch (radiusPosition) {
     case 1:
@@ -19,6 +19,20 @@ function CalenderDay({radiusPosition}) {
     default:
       break;
   }
+  let linearProgressFiller = [];
+  for (let i = 0; i < tasksInWeek; i++) {
+    linearProgressFiller.push(
+      <LinearProgress
+        sx={{
+          height: 10,
+          mb: 2,
+          opacity: "0%",
+        }}
+        value={100}
+        variant="determinate"
+      />
+    );
+  }
   return (
     <>
       <Box
@@ -29,10 +43,27 @@ function CalenderDay({radiusPosition}) {
           border: 1,
           minHeight: "150px",
           borderRadius: boxBorderRadius,
-          color: 'black',
-          backgroundColor: '#e3e3e3',
+          color: "black",
+          backgroundColor: "#e3e3e3",
         }}
       >
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            p: 2,
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography
+            variant="h6"
+            sx={{ display: { xs: "none", lg: "block" }, opacity: 0 }}
+          >
+            xd
+          </Typography>
+          <Typography variant="h4" sx={{opacity: 0}}>xd</Typography>
+        </Box>
+        {linearProgressFiller}
       </Box>
     </>
   );

@@ -12,7 +12,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   buttonsContainer,
   forgotPassword,
@@ -22,14 +21,15 @@ import {
 } from "./signInUp-style";
 import { auth } from "../firebase";
 import firebase from "firebase";
-import axios from "axios";
 import { Alert } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { teal } from "@mui/material/colors";
+import { useDispatch } from "react-redux";
+import { signIn } from "../reducers/actions/action";
+import {useSelector} from "react-redux";
 
 const headerStyle = {
-  fontFamily: "sans-serif",
   fontWeight: "bold",
   fontSize: "20px",
 };
@@ -51,21 +51,24 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(-1);
+  const account = useSelector(state => state.auth)
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   const onSubmit = (data) => {
-    axios.post("http://localhost:4000/login", data).then((res) => {
-      console.log(res.data);
-      setErr(res.data);
-      if (res.data === 2) {
-        navigate("/signup");
-      }
-    });
+    dispatch(signIn(data));
   };
+
+  React.useEffect(()=>{
+    if(Object.keys(account).length !== 0)
+      navigate('/')
+  }, [account]);
 
   return (
     <>
@@ -88,7 +91,6 @@ export default function Login() {
             marginTop: "-20px",
           }}
         >
-          <CssBaseline />
           <Box
             sx={{
               marginTop: 8,
@@ -233,10 +235,7 @@ export default function Login() {
               </div>
               <Grid container>
                 <Grid item xs>
-                  <Link
-                    href="#"
-                    sx={forgotPassword}
-                  >
+                  <Link href="#" sx={forgotPassword}>
                     <Typography variant="body2">Forgot password?</Typography>
                   </Link>
                 </Grid>
