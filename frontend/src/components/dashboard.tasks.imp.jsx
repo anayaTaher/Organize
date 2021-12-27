@@ -95,7 +95,6 @@ function TasksImp() {
   }, [dispatch]);
 
   React.useEffect(() => {
-    console.log(tasks, teams);
   }, [tasks, teams]);
 
   return (

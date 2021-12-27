@@ -64,7 +64,6 @@ export default function SignUp() {
 			avatar: auto ? (cred.user.photoURL ? cred.user.photoURL : null) : null
 		}).then(() => {
 			const data = {email, password}
-			console.log(data)
 			dispatch(signIn(data))
 			// history.push("/chat-room")
 		})

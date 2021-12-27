@@ -45,8 +45,6 @@ const Home = () => {
 	
 	const selectUser = async (user) => {
 		setChat(user)
-		console.log(1, user)
-		console.log(2, chat)
 		const user2 = user.uid
 		const id = user1 > user2 ? `${user1 + user2}` : `${user2 + user1}`
 		const msgsRef = collection(db, "messages", id, "chat")
