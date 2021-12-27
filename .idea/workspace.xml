@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi4">
+    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/meeting/assets/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/backend/meeting/assets/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/meeting/assets/js/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/meeting/assets/js/events.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/meeting/meeting.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/meeting/meeting.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/signup.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/signup.route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Loading.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Loading.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/MessageForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MessageForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +75,7 @@
       <workItem from="1640539970478" duration="2272000" />
       <workItem from="1640542317023" duration="10366000" />
       <workItem from="1640584313524" duration="8763000" />
-      <workItem from="1640606750788" duration="26802000" />
+      <workItem from="1640606750788" duration="30229000" />
     </task>
     <task id="LOCAL-00001" summary="For Demo">
       <created>1640541964056</created>
@@ -115,7 +112,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640617526611</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Taher And Badawi5">
+      <created>1640638191017</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1640638191017</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -139,6 +143,7 @@
     <MESSAGE value="Taher And Badawi2" />
     <MESSAGE value="Taher And Badawi3" />
     <MESSAGE value="Taher And Badawi4" />
-    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi4" />
+    <MESSAGE value="Taher And Badawi5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi5" />
   </component>
 </project>
