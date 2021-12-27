@@ -78,13 +78,13 @@ form.sendMsg {
 form.sendMsg .input {
     background-color: #DDD;
     height: 40px;
-    width: 80%;
+    width: 90%;
     display: flex;
     justify-content: flex-start;
     padding: 0 0 0 5px !important;
     margin-top: 8px;
     margin-left: 5px;
-    border-radius: 10px;
+    border-radius:50px
 }
 
 form.sendMsg button {

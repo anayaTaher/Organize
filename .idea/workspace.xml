@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi" />
+    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Attachment.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Message.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Message.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/MessageForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MessageForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/User.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/User.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sendMessages.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/styles/sharedStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/styles/sharedStyles.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,6 +77,7 @@
       <workItem from="1640539356455" duration="599000" />
       <workItem from="1640539970478" duration="2272000" />
       <workItem from="1640542317023" duration="10366000" />
+      <workItem from="1640584313524" duration="8665000" />
     </task>
     <task id="LOCAL-00001" summary="For Demo">
       <created>1640541964056</created>
