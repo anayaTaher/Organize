@@ -1,21 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi2">
+    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/signup.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/signup.route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/ContactUs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ContactUs.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.imp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.imp.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.taskRow.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.taskRow.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/header.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/contributors.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/contributors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/projects.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/MessageForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MessageForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +43,11 @@
     <property name="ts.external.directory.path" value="C:\Users\anaya\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\213.5744.224\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="Push.Settings">
+    <force-push-targets>
+      <force-push-target remote-path="origin" branch="main" />
+    </force-push-targets>
+  </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\anaya\WebstormProjects\Organize\frontend\src" />
@@ -80,7 +73,7 @@
       <workItem from="1640539970478" duration="2272000" />
       <workItem from="1640542317023" duration="10366000" />
       <workItem from="1640584313524" duration="8763000" />
-      <workItem from="1640606750788" duration="6277000" />
+      <workItem from="1640606750788" duration="8395000" />
     </task>
     <task id="LOCAL-00001" summary="For Demo">
       <created>1640541964056</created>
@@ -103,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640593138360</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Taher And Badawi3">
+      <created>1640613203079</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1640613203079</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -125,6 +125,7 @@
     <MESSAGE value="For Demo2" />
     <MESSAGE value="Taher And Badawi" />
     <MESSAGE value="Taher And Badawi2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi2" />
+    <MESSAGE value="Taher And Badawi3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi3" />
   </component>
 </project>
