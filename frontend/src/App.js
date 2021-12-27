@@ -41,7 +41,7 @@ const App = () => {
 					<CssBaseline/>
 					<Switch>
 						<Route exact path="/" component={Homepage}/>
-						<Route path="/contactus" component={ContactUs}/>
+						<PrivateRoute toLogin={true} path="/contactus" component={ContactUs}/>
 						<PrivateRoute toLogin={false} path="/login" component={Login}/>
 						<PrivateRoute toLogin={false} path="/signup" component={SignUp}/>
 						<PrivateRoute toLogin={false} path="/forgotPassword" component={ForgotPassword}/>

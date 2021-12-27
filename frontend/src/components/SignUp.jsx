@@ -80,7 +80,6 @@ export default function SignUp() {
       })
       .then(() => {
         const data = { email, password };
-        console.log(data);
         dispatch(signIn(data));
         // history.push("/chat-room")
       });

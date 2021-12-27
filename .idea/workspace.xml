@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi" />
+    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/signup.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/signup.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ChatRoom.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ContactUs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ContactUs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.imp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.imp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.taskRow.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dashboard.tasks.taskRow.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/contributors.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/contributors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/projects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/auth.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,6 +79,8 @@
       <workItem from="1640539356455" duration="599000" />
       <workItem from="1640539970478" duration="2272000" />
       <workItem from="1640542317023" duration="10366000" />
+      <workItem from="1640584313524" duration="8763000" />
+      <workItem from="1640606750788" duration="6277000" />
     </task>
     <task id="LOCAL-00001" summary="For Demo">
       <created>1640541964056</created>
@@ -79,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640552969090</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Taher And Badawi2">
+      <created>1640593138360</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1640593138360</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -100,6 +124,7 @@
     <MESSAGE value="For Demo" />
     <MESSAGE value="For Demo2" />
     <MESSAGE value="Taher And Badawi" />
-    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi" />
+    <MESSAGE value="Taher And Badawi2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi2" />
   </component>
 </project>

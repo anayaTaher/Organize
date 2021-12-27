@@ -101,6 +101,36 @@ router.post('/reset-password/:id/:token', async (request, response) => {
 	}
 })
 
+
+router.post('/contact-us', async (request, response) => {
+	
+	let transporter = nodemailer.createTransport({
+		service: 'gmail', auth: {user: 'organize.graduation.project@gmail.com', pass: 'organize741236985'}
+	})
+	
+	let mailOptions = {
+		from: request.body.email,
+		to: 'organize.graduation.project@gmail.com',
+		subject: 'Contact Us Message',
+		html: `
+			<b>From:   </b> <i>${request.body.email}  </i>
+			<br>
+			<b>Message:</b> <i>${request.body.message}</i>
+		`
+	}
+	
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			console.log(error)
+			response.json(1)
+		} else {
+			console.log('Email sent: ' + info.response)
+			response.json(0)
+		}
+	})
+})
+
+
 router.post("/loginAuth", async (req, res) => {
 	const {password, email} = req.body
 	try {

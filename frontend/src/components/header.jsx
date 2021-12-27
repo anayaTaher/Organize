@@ -19,6 +19,7 @@ import ToolBar from "@mui/material/Toolbar";
 import Logo from "../assets/logo/logo.png";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
+import ChatIcon from "@mui/icons-material/Chat";
 import ProjectsIcon from "@mui/icons-material/Task";
 import ContactUsIcon from "@mui/icons-material/Phone";
 import PersonAdd from "@mui/icons-material/PersonAdd";
@@ -27,7 +28,8 @@ import Logout from "@mui/icons-material/Logout";
 import { auth, db } from "../firebase";
 import { AuthContext } from "./auth";
 import { useHistory } from "react-router-dom";
-import {teal} from "@mui/material/colors";
+import { teal } from "@mui/material/colors";
+import PersonalVideoIcon from "@mui/icons-material/PersonalVideo";
 
 const HeaderTheme = createTheme({
   palette: {
@@ -37,7 +39,7 @@ const HeaderTheme = createTheme({
   },
 });
 
-function Header({ flag = true}) {
+function Header({ flag = true }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const HandleMobileClose = () => setMobileOpen(!mobileOpen);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -64,7 +66,7 @@ function Header({ flag = true}) {
           boxShadow: 0,
         }}
       >
-        <ToolBar sx={{backgroundColor: flag ? "white" : teal[400] }}>
+        <ToolBar sx={{ backgroundColor: flag ? "white" : teal[400] }}>
           <ToolBar sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {flag && (
               <>
@@ -91,14 +93,16 @@ function Header({ flag = true}) {
                     Projects
                   </Link>
                 )}
-                <Link
-                  href="/contactus"
-                  underline="none"
-                  variant="h6"
-                  sx={{ mr: 5, fontWeight: 500 }}
-                >
-                  Contact Us
-                </Link>
+                {user && (
+                  <Link
+                    href="/contactus"
+                    underline="none"
+                    variant="h6"
+                    sx={{ mr: 5, fontWeight: 500 }}
+                  >
+                    Contact Us
+                  </Link>
+                )}
               </>
             )}
             {user && flag && (
@@ -163,23 +167,66 @@ function Header({ flag = true}) {
             </ListItem>
           </Link>
           <Divider />
-          <Link href="/projects" color="#000000" underline="none">
-            <ListItem>
-              <ListItemButton>
-                <ProjectsIcon sx={{ mr: 1 }} />
-                Projects
-              </ListItemButton>
-            </ListItem>
-          </Link>
-          <Divider />
-          <Link href="/contactus" color="#000000" underline="none">
-            <ListItem>
-              <ListItemButton>
-                <ContactUsIcon sx={{ mr: 1 }} />
-                Contact Us
-              </ListItemButton>
-            </ListItem>
-          </Link>
+          {user && (
+            <>
+              <Link href="/projects" color="#000000" underline="none">
+                <ListItem>
+                  <ListItemButton>
+                    <ProjectsIcon sx={{ mr: 1 }} />
+                    Projects
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Divider />
+            </>
+          )}
+
+          {user && (
+            <>
+              <Link href="/contactus" color="#000000" underline="none">
+                <ListItem>
+                  <ListItemButton>
+                    <ContactUsIcon sx={{ mr: 1 }} />
+                    Contact Us
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Divider />
+            </>
+          )}
+          {user && (
+            <>
+              <Link href="/chat-room" color="#000000" underline="none">
+                <ListItem>
+                  <ListItemButton>
+                    <ChatIcon sx={{ mr: 1 }} />
+                    Chat room
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Divider />
+            </>
+          )}
+          {user && (
+            <>
+              <Link
+                href="#"
+                color="#000000"
+                underline="none"
+                onClick={() =>
+                  (window.location.href = "http://localhost:4000/")
+                }
+              >
+                <ListItem>
+                  <ListItemButton>
+                    <PersonalVideoIcon sx={{ mr: 1 }} />
+                    Video Calling
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+              <Divider />
+            </>
+          )}
         </List>
       </Drawer>
       {user !== null && (

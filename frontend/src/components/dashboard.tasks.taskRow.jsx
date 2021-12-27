@@ -71,7 +71,6 @@ function TaskRow(props) {
       taskTeam.push(<Chip variant="filled" label={remainingTeams} />);
       break;
     }
-    console.log(props.allTeams);
     taskTeam.push(<Chip variant="outlined" label={props.allTeams.find(team => team._id === props.taskTeam[i]).name} />);
   }
 

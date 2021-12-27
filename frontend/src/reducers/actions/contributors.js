@@ -27,7 +27,6 @@ export const fetchContributors = (data) => async (dispatch) => {
     for(const user of res.data){
         finalData.push({...user, teams: reversed[user._id]});
     }
-    console.log(finalData);
     dispatch({ type: "FETCH_CONTRIBUTORS", payload: finalData });
   } catch (err) {
     console.log(err);

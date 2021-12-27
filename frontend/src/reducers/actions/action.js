@@ -17,10 +17,6 @@ export const signIn = (data) => async (dispatch) => {
 		const token = {token: res.data.token}
 		localStorage.setItem("token", JSON.stringify(token))
 		dispatch({type: "LOG_IN", payload: res.data.userData})
-		
-		console.log(1, localStorage.getItem("token"))
-		console.log(2, JSON.stringify(token))
-		
 	} catch (err) {
 		console.log(err)
 	}
