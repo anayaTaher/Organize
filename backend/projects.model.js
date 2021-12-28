@@ -10,10 +10,6 @@ const ProjectsModel = new Mongoose.Schema({
     require: true,
   },
   image: String,
-  tasks: {
-    type: [String],
-    default: [],
-  },
   contributors: {
     type: [String],
     default: [],

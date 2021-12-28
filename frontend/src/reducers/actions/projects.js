@@ -25,3 +25,36 @@ export const fetchProjects = () => async (dispatch) => {
     console.log(err)
   }
 }
+
+export const fetchProjectsIn = () => async (dispatch) => {
+  try {
+    const token = JSON.parse(localStorage.getItem("token")).token
+    const account = jwt.verify(token, "verysecret")
+    const res = await axios.post(server + "/fetchProjectsIn", account);
+    dispatch({type: "FETCH_PROJECTS_IN", payload: res.data})
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+export const isProjectOwner = (data) => async (dispatch) => {
+  try{
+    const token = JSON.parse(localStorage.getItem("token")).token
+    const account = jwt.verify(token, "verysecret")
+    const res = await axios.post(server + "/isOwner", {...data, account});
+    dispatch({type: "IS_OWNER", payload: res.data})
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
+export const getProjectDetails = (data) => async (dispatch) => {
+  try{
+    const res = await axios.post(server + "/getProjectDetails", data);
+    dispatch({type: "FETCH_PROJECT_DETAILS", payload: res.data})
+  }
+  catch(err){
+    console.log(err);
+  }
+}

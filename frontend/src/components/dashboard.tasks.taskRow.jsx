@@ -20,6 +20,9 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import React from "react";
 import { Box } from "@mui/system";
+import { useDispatch } from "react-redux";
+import { removeTask } from "../reducers/actions/tasks";
+import { useParams, useHistory } from "react-router-dom";
 
 const TEAMS_TO_SHOW = 3;
 
@@ -28,6 +31,14 @@ function TaskRow(props) {
   const [modalOpen, setModalOpen] = React.useState(false);
   const open = Boolean(anchorEl);
   const date = new Date(Date.parse(props.taskDeadline));
+  const dispatch = useDispatch();
+  const params = useParams();
+  const history = useHistory();
+
+  const handleEditTask = () =>{
+    history.push(`/projects/${params.id}/updateTask/${props.taskId}`);
+  }
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -36,9 +47,16 @@ function TaskRow(props) {
   };
   const handleModalOpen = () => {
     setModalOpen(true);
+    handleMenuClose();
   };
   const handleModalClose = () => {
     setModalOpen(false);
+  };
+
+  const deleteTask = () => {
+    handleModalClose();
+    console.log(props.taskId);
+    dispatch(removeTask({ projectId: params.id, taskId: props.taskId }));
   };
 
   let taskIcon = <CheckIcon sx={{ color: "green" }} />;
@@ -54,10 +72,10 @@ function TaskRow(props) {
       break;
     case "onHold":
       taskIcon = <MoreHorizIcon sx={{ color: "orange" }} />;
-      taskTooltipTitle = "Prerequisit task is behind the schedule!";
+      taskTooltipTitle = "Prerequisit task is not complete";
       break;
     case "notStarted":
-      taskIcon = <MoreHorizIcon sx={{ color: "lightgray" }} />;
+      taskIcon = <MoreHorizIcon sx={{ color: "gray" }} />;
       taskTooltipTitle = "Task has not been worked on yet";
       break;
     default:
@@ -71,7 +89,15 @@ function TaskRow(props) {
       taskTeam.push(<Chip variant="filled" label={remainingTeams} />);
       break;
     }
-    taskTeam.push(<Chip variant="outlined" label={props.allTeams.find(team => team._id === props.taskTeam[i]).name} />);
+    if (props.allTeams.length > 0)
+      taskTeam.push(
+        <Chip
+          variant="outlined"
+          label={
+            props.allTeams.find((team) => team._id === props.taskTeam[i]).name
+          }
+        />
+      );
   }
 
   return (
@@ -87,10 +113,16 @@ function TaskRow(props) {
         </Grid>
         <Grid item container xs={4}>
           <Link
-            href="#"
+            onClick={() =>
+              history.push(`/projects/${params.id}/task/${props.taskId}`)
+            }
             underline="none"
             sx={{
-              "&:hover": { textDecoration: "none", color: "lightseagreen" },
+              "&:hover": {
+                textDecoration: "none",
+                color: "lightseagreen",
+                cursor: "pointer",
+              },
               color: "black",
             }}
           >
@@ -114,41 +146,46 @@ function TaskRow(props) {
           </Typography>
         </Grid>
         <Grid item container justifyContent="center" xs={1}>
-          <IconButton onClick={handleMenuOpen}>
-            <MenuIcon />
-          </IconButton>
-          <Menu
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-          >
-            <MenuItem onClick={handleMenuClose}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  "& > *": { mr: 2 },
-                }}
+          {props.owner && (
+            <>
+              <IconButton onClick={handleMenuOpen}>
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleMenuClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
               >
-                <EditIcon />
-                <Typography>Edit Task</Typography>
-              </Box>
-            </MenuItem>
-            <MenuItem onClick={handleModalOpen}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  "& > *": { mr: 2 },
-                }}
-              >
-                <DeleteIcon />
-                <Typography>Delete Task</Typography>
-              </Box>
-            </MenuItem>
-          </Menu>
+                <MenuItem onClick={handleEditTask}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      "& > *": { mr: 2 },
+                    }}
+                  >
+                    <EditIcon />
+                    <Typography>Edit Task</Typography>
+                  </Box>
+                </MenuItem>
+                <MenuItem onClick={handleModalOpen}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      "& > *": { mr: 2 },
+                    }}
+                  >
+                    <DeleteIcon />
+                    <Typography>Delete Task</Typography>
+                  </Box>
+                </MenuItem>
+              </Menu>
+            </>
+          )}
+
           <Modal open={modalOpen} onClose={handleModalClose}>
             <Box
               sx={{
@@ -179,7 +216,7 @@ function TaskRow(props) {
                 <Button
                   variant="contained"
                   sx={{ color: "white" }}
-                  onClick={handleModalClose}
+                  onClick={deleteTask}
                 >
                   Delete
                 </Button>

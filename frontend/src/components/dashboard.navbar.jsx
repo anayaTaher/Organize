@@ -29,7 +29,10 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AddIcon from "@mui/icons-material/Add";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import GroupsIcon from "@mui/icons-material/Groups";
-const React = require("react");
+import {useDispatch, useSelector} from "react-redux"
+import {getProjectDetails} from "../reducers/actions/projects";
+import {fetchTasks} from "../reducers/actions/tasks";
+import React from "react";
 
 const drawerWidth = 280;
 
@@ -37,8 +40,7 @@ const drawerItems = [
   {
     text: "Announcements",
     icon: AnnouncementIcon,
-    isBadge: true,
-    badgeContent: 2,
+    isBadge: false,
     href: "announcements",
   },
   {
@@ -106,6 +108,26 @@ const drawerItems = [
 function Navbar(props) {
   const history = useHistory();
   const params = useParams();
+  const dispatch = useDispatch();
+  const tasks = useSelector(state => state.tasks);
+  const projectDetails = useSelector(state => state.projectDetails);
+
+  let tasksDone = 0;
+  let progress = 0;
+  let totalWeight = 0;
+  for(let i = 0 ; i < tasks.length ; i++){
+    totalWeight += tasks[i].weight;
+    if(tasks[i].done){
+      tasksDone++;
+      progress += tasks[i].weight;
+    }
+  }
+  progress = totalWeight === 0 ? 0 : 100 * progress / totalWeight;
+
+  React.useEffect(()=>{
+    dispatch(getProjectDetails({projectId: params.id}));
+    dispatch(fetchTasks({projectId: params.id}));
+  },[dispatch])
   return (
     <>
       <Drawer
@@ -150,13 +172,13 @@ function Navbar(props) {
                   width: "100%",
                 }}
               >
-                <Avatar src={ProjectImage} sx={{ mr: 2 }} />
+                <Avatar src={projectDetails.image} sx={{ mr: 2 }} />
                 <Typography
                   variant="h6"
                   sx={{ color: "#708090", fontWeight: "bold" }}
                   noWrap
                 >
-                  Facebook
+                  {projectDetails.name}
                 </Typography>
               </Box>
             </ListItem>
@@ -170,7 +192,7 @@ function Navbar(props) {
                 <LinearProgress
                   sx={{ flexGrow: 1 }}
                   variant="determinate"
-                  value={37}
+                  value={progress}
                 />
               </Box>
             </ListItem>
@@ -187,7 +209,7 @@ function Navbar(props) {
                   Tasks Finished
                 </Typography>
                 <Typography variant="overline" sx={{ color: "#708090" }}>
-                  20/61
+                  {tasksDone}/{tasks.length}
                 </Typography>
               </Box>
             </ListItem>

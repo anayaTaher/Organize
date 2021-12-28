@@ -9,7 +9,7 @@ import ForgotPassword from "./components/ForgotPassword"
 import ResetPassword from "./components/ResetPassword"
 import {createTheme, responsiveFontSizes, ThemeProvider} from "@mui/material/styles"
 import {teal} from "@mui/material/colors"
-import Header from "./components/header"
+import UpdateTask from "./components/dashboard.updateTask";
 import {CssBaseline} from "@mui/material"
 import ChatRoom from "./components/ChatRoom"
 import AuthProvider from "./components/auth"
@@ -21,6 +21,7 @@ import Contributors from "./components/dashboard.contributors"
 import NewTask from "./components/dashboard.newTask"
 import Announcements from "./components/dashboard.announcements"
 import NewTeam from "./components/dashboard.newTeam"
+import Task from "./components/dashboard.task"
 
 let mainTheme = createTheme({
 	typography: {fontFamily: "Roboto"},
@@ -47,6 +48,8 @@ const App = () => {
 						<PrivateRoute toLogin={false} path="/forgotPassword" component={ForgotPassword}/>
 						<PrivateRoute toLogin={false} path="/reset-password/:id/:token" component={ResetPassword}/>
 						<PrivateRoute toLogin={true} path="/chat-room" component={ChatRoom}/>
+						<PrivateRoute toLogin={true} path="/projects/:id/updateTask/:tid" component={UpdateTask}/>
+						<PrivateRoute toLogin={true} path="/projects/:id/task/:tid" component={Task}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/announcements" component={Announcements}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/tasks" component={Tasks}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/contributors" component={Contributors}/>

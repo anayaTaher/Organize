@@ -1,19 +1,16 @@
 import {
   Grid,
   Typography,
-  Divider,
   FormControl,
-  Input,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
-  Button,
   IconButton,
 } from "@mui/material";
 import TaskIcon from "@mui/icons-material/Task";
 import React from "react";
-import { Box, typography } from "@mui/system";
+import { Box } from "@mui/system";
 import TaskRow from "./dashboard.tasks.taskRow";
 import SearchIcon from "@mui/icons-material/Search";
 import SortIcon from "@mui/icons-material/Sort";
@@ -22,45 +19,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks } from "../reducers/actions/tasks";
 import { fetchTeams } from "../reducers/actions/teams";
-
-const date1 = new Date(2021, 10, 20);
-const date2 = new Date(2022, 5, 1);
-const date3 = new Date(2020, 0, 14);
-const taskTeam1 = [
-  "Design Team",
-  "Frontend Team",
-  "Backend Team",
-  "Management Team",
-];
-const taskTeam2 = ["Backend Team"];
-const taskTeam3 = ["Management Team", "Frontend Team"];
-
-const data = [
-  {
-    taskName: "Desiging the Frontend Using Material UI",
-    taskState: "done",
-    taskWeight: 120,
-    taskTeam: taskTeam1,
-    taskDeadline: date2,
-    taskProgress: 100,
-  },
-  {
-    taskName: "Testing and Deployment",
-    taskState: "onHold",
-    taskWeight: 150,
-    taskTeam: taskTeam2,
-    taskDeadline: date3,
-    taskProgress: 100,
-  },
-  {
-    taskName: "Finshing The Backend",
-    taskState: "done",
-    taskWeight: 180,
-    taskTeam: taskTeam3,
-    taskDeadline: date1,
-    taskProgress: 50,
-  },
-];
+import {isProjectOwner} from "../reducers/actions/projects";
 
 function TasksImp() {
   const history = useHistory();
@@ -70,6 +29,7 @@ function TasksImp() {
   const teams = useSelector((state) => state.teams);
   const [sortBy, setSortBy] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
+  const owner = useSelector(state => state.owner);
   const handleSortByChange = (event) => {
     setSortBy(event.target.value);
   };
@@ -78,8 +38,8 @@ function TasksImp() {
   };
 
   const DisplayedTasks = React.useMemo(() => {
-    let sortedData = [...data].filter((item) => {
-      let taskName = item.taskName.toLowerCase();
+    let sortedData = [...tasks].filter((item) => {
+      let taskName = item.name.toLowerCase();
       let searchItem = searchValue.toLowerCase();
       return taskName.includes(searchItem);
     });
@@ -87,15 +47,15 @@ function TasksImp() {
       return a[sortBy] > b[sortBy];
     });
     return sortedData;
-  }, [data, sortBy, searchValue]);
+  }, [tasks, sortBy, searchValue]);
 
   React.useEffect(() => {
     dispatch(fetchTasks({ projectId: params.id }));
     dispatch(fetchTeams({ projectId: params.id }));
+    dispatch(isProjectOwner({projectId: params.id}));
   }, [dispatch]);
 
-  React.useEffect(() => {
-  }, [tasks, teams]);
+  React.useEffect(() => {}, [tasks, teams]);
 
   return (
     <>
@@ -174,16 +134,50 @@ function TasksImp() {
             />
           );
         })} */}
-        {tasks.map((task) => {
+        {DisplayedTasks.map((task) => {
+          let state = "notStarted";
+          const deadlineDate = new Date(Date.parse(task.deadline));
+          const today = new Date();
+          const actuallyToday = new Date(
+            today.getFullYear(),
+            today.getMonth(),
+            today.getDate()
+          );
+
+          let progress = 0;
+          let isAnyInProgress = false;
+          task.subtasks.forEach((subtask) => {
+            if (subtask.inProgress) isAnyInProgress = true;
+          });
+          if (isAnyInProgress) state = "inProgress";
+          task.subtasks.forEach((subtask) => {
+            if (subtask.done) {
+              progress += subtask.weight;
+            }
+          });
+          progress = (100 * progress) / task.weight;
+          task.dependsOn.forEach((taskId) => {
+            const foundTask = tasks.find((dtask) => dtask._id === taskId);
+            if (foundTask && !foundTask.done) state = "onHold";
+          });
+          if (deadlineDate.getTime() < actuallyToday.getTime()) {
+            state = "behind";
+          }
+          if (task.done) {
+            state = "done";
+            progress = 100;
+          }
           return (
             <TaskRow
               taskName={task.name}
               taskDeadline={task.deadline}
-              taskProgress={0}
+              taskProgress={progress}
               taskWeight={task.weight}
-              taskState={"inProgress"}
+              taskState={state}
               taskTeam={task.teams}
               allTeams={teams}
+              taskId={task._id}
+              owner={owner}
             />
           );
         })}

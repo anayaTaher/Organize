@@ -14,11 +14,12 @@ import {
 } from "@mui/material";
 import { CalendarPicker, LocalizationProvider } from "@mui/lab";
 import AddIcon from "@mui/icons-material/Add";
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import ClearIcon from "@mui/icons-material/Clear";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { green, red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { createTask } from "../reducers/actions/tasks";
+import { updateTask } from "../reducers/actions/tasks";
 import { useParams, useHistory } from "react-router-dom";
 import { fetchTeams } from "../reducers/actions/teams";
 import { fetchTasks } from "../reducers/actions/tasks";
@@ -46,14 +47,16 @@ function Subtitle({ number, title, mt = 0 }) {
   );
 }
 
-function NewTaskImp() {
+function UpdateTaskImp() {
   const dispatch = useDispatch();
   const params = useParams();
   const teams = useSelector((state) => state.teams);
   const tasks = useSelector((state) => state.tasks);
   const history = useHistory();
   const today = new Date();
-
+  const [currentTask, setCurrentTask] = React.useState();
+  const [checkedTeams, setCheckedTeams] = React.useState([]);
+  const [checkedTasks, setCheckedTasks] = React.useState([]);
   const [taskData, setTaskData] = React.useState({
     taskName: "",
     taskDescription: "",
@@ -83,46 +86,86 @@ function NewTaskImp() {
     dispatch(fetchTasks({ projectId: params.id }));
   }, [dispatch]);
 
-  const [checkedTeams, setCheckedTeams] = React.useState([]);
-
   React.useEffect(() => {
-    setCheckedTeams(teams.map((team) => ({ ...team, isChecked: false })));
-  }, [teams]);
-
-  const [checkedTasks, setCheckedTasks] = React.useState([]);
-
-  React.useEffect(() => {
-    setCheckedTasks(tasks.map((task) => ({ ...task, isChecked: false })));
+    const [x, ..._] = tasks.filter((task) => task._id === params.tid);
+    setCurrentTask(x);
   }, [tasks]);
 
-  const submitTask = () => {
-    const newSubtasks = subtasks.map((subtask) => {
-      return {
-        name: subtask.subtaskName,
-        weight: subtask.subtaskWeight,
-        inProgress: false,
-        done: false,
-        worker: "0",
-        finisher: "0",
-      };
+  React.useEffect(() => {
+    if (!currentTask) return;
+    setTaskData({
+      taskName: currentTask.name,
+      taskDescription: currentTask.description,
+      taskWeight: currentTask.weight,
+      taskDeadline: new Date(Date.parse(currentTask.deadline)),
+      taskStartDate: new Date(Date.parse(currentTask.startDate)),
     });
-    const newTask = {
+    let subtasks = [];
+    currentTask.subtasks.forEach((subtask) => {
+      subtasks.push({
+        ...subtask,
+        id: subtask._id,
+        subtaskName: subtask.name,
+        subtaskWeight: subtask.weight,
+      });
+    });
+    setSubtasks(subtasks);
+    setCheckedTeams(
+      teams.map((team) => ({
+        ...team,
+        isChecked: currentTask.teams.includes(team._id),
+      }))
+    );
+    setCheckedTasks(
+      tasks
+        .map((task) => ({
+          ...task,
+          isChecked: currentTask.dependsOn.includes(task._id),
+        }))
+        .filter((task) => task._id !== currentTask._id)
+    );
+  }, [currentTask]);
+
+  const handleUpdateTask = () => {
+    const updatedSubTasks = subtasks.map((subtask) => {
+      if (!subtask._id)
+        return {
+          name: subtask.subtaskName,
+          weight: subtask.subtaskWeight,
+          inProgress: false,
+          done: false,
+          worker: "0",
+          finisher: "0",
+        };
+      else
+        return {
+          _id: subtask._id,
+          name: subtask.subtaskName,
+          weight: subtask.subtaskWeight,
+          inProgress: subtask.inProgress,
+          done: subtask.done,
+          worker: subtask.worker,
+          finisher: subtask.finisher,
+        };
+    });
+    const updatedTask = {
+      _id: params.tid,
       projectId: params.id,
       name: taskData.taskName,
       description: taskData.taskDescription,
       weight: taskData.taskWeight,
       startDate: taskData.taskStartDate,
       deadline: taskData.taskDeadline,
-      subtasks: newSubtasks,
+      subtasks: updatedSubTasks,
       teams: checkedTeams.filter((team) => {
         if (team.isChecked) return team._id;
       }),
       dependsOn: checkedTasks.filter((task) => {
         if (task.isChecked) return task._id;
       }),
-      done: false,
+      done: currentTask.done,
     };
-    dispatch(createTask(newTask));
+    dispatch(updateTask(updatedTask));
     history.push(`/projects/${params.id}/tasks`);
   };
 
@@ -224,9 +267,9 @@ function NewTaskImp() {
           width: "100%",
         }}
       >
-        <AddBoxIcon fontSize="large" />
+        <SystemUpdateAltIcon fontSize="large" />
         <Typography variant="h5" sx={{ flexGrow: 1 }}>
-          New Task
+          Update {currentTask?.name} Task
         </Typography>
       </Box>
       <Subtitle number={1} title={"Task Details"} />
@@ -555,8 +598,8 @@ function NewTaskImp() {
       <Box>
         <Grid container padding={2}>
           <Grid item container flexDirection="row-reverse" xs={8}>
-            <Button size="large" variant="contained" onClick={submitTask}>
-              Create Task
+            <Button size="large" variant="contained" onClick={handleUpdateTask}>
+              Update Task
             </Button>
           </Grid>
         </Grid>
@@ -565,4 +608,4 @@ function NewTaskImp() {
   );
 }
 
-export default NewTaskImp;
+export default UpdateTaskImp;

@@ -42,8 +42,9 @@ function ScheduleImp() {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DesktopDatePicker
                 label="Select Date"
+                views={['year', 'month']}
                 value={value}
-                minDate={new Date("2017-01-01")}
+                minDate={new Date("2000-01-01")}
                 onChange={(newValue) => {
                   setValue(newValue);
                 }}
@@ -109,7 +110,7 @@ function ScheduleImp() {
             </IconButton>
           </Grid>
         </Grid>
-        <Calender/>
+        <Calender key={value} today={value}/>
       </Box>
     </>
   );
