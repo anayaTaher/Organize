@@ -118,7 +118,7 @@ function Header({ flag = true }) {
             {user && flag && (
               <Link
                 onClick={() =>
-                  (window.location.href = "http://localhost:4000/")
+                  (window.location.href = "http://192.168.1.242:4000/")
                 }
                 href="#"
                 underline="none"
@@ -214,7 +214,7 @@ function Header({ flag = true }) {
                 color="#000000"
                 underline="none"
                 onClick={() =>
-                  (window.location.href = "http://localhost:4000/")
+                  (window.location.href = "http://192.168.1.242:4000/")
                 }
               >
                 <ListItem>

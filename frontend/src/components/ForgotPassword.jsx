@@ -26,7 +26,7 @@ export default function ForgotPassword() {
 	const [email, setEmail] = useState("")
 	const [err, setErr] = useState(-1)
 	const {register, handleSubmit, formState: {errors}} = useForm()
-	const onSubmit = data => axios.post('http://localhost:4000/forgotPassword', data).then(res => setErr(res.data))
+	const onSubmit = data => axios.post('http://192.168.1.242:4000/forgotPassword', data).then(res => setErr(res.data))
 	
 	return <>
 		<CssBaseline/>

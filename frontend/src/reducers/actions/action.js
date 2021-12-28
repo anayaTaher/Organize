@@ -1,10 +1,10 @@
 import axios from "axios"
 
-const server = "http://localhost:4000"
+const server = "http://192.168.1.242:4000"
 export const fetchName = () => async (dispatch) => {
 	try {
 		const token = JSON.parse(localStorage.getItem("token"))
-		const res = await axios.post("http://localhost:4000/getName", token)
+		const res = await axios.post("http://192.168.1.242:4000/getName", token)
 		dispatch({type: "GET_EMAIL", payload: res.data.email})
 	} catch (err) {
 		console.log(err)
@@ -13,7 +13,7 @@ export const fetchName = () => async (dispatch) => {
 
 export const signIn = (data) => async (dispatch) => {
 	try {
-		const res = await axios.post("http://localhost:4000/loginAuth", data)
+		const res = await axios.post("http://192.168.1.242:4000/loginAuth", data)
 		const token = {token: res.data.token}
 		localStorage.setItem("token", JSON.stringify(token))
 		dispatch({type: "LOG_IN", payload: res.data.userData})
@@ -25,7 +25,7 @@ export const signIn = (data) => async (dispatch) => {
 export const getAccountData = () => async (dispatch) => {
 	try {
 		const token = JSON.parse(localStorage.getItem("token"));
-		const res = await axios.post("http://localhost:4000/getAccountData", token);
+		const res = await axios.post("http://192.168.1.242:4000/getAccountData", token);
 		dispatch({type: "GET_ACCOUNT_DATA", payload: res.data})
 	} catch (err) {
 		console.log(err)

@@ -16,7 +16,8 @@ const Message = ({msg, user1}) => {
 				</a>}
 				{msg.text}
 				<br/>
-				<small style={{marginTop:"0", color:"#DDD"}}> <Moment fromNow>{msg.createdAt.toDate()}</Moment></small>
+				<small style={{marginTop: "0", color: "#DDD"}}> <Moment
+					fromNow>{msg.createdAt.toDate()}</Moment></small>
 			</p>
 		</div>
 	</>

@@ -70,7 +70,7 @@ export default function Login() {
 	}, [account])
 	
 	const onSubmit = data => {
-		axios.post('http://localhost:4000/login', data).then(res => {
+		axios.post('http://192.168.1.242:4000/login', data).then(res => {
 			setErr(res.data)
 			if (res.data.length > 1) {
 				dispatch(signIn(data))

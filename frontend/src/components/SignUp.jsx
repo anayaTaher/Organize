@@ -105,7 +105,7 @@ export default function SignUp() {
   };
 
   const checkCode = async () => {
-    const res = await axios.post("http://localhost:4000/signup", {
+    const res = await axios.post("http://192.168.1.242:4000/signup", {
       email: email,
       code: confirmCode,
       flag: 1,
@@ -123,13 +123,13 @@ export default function SignUp() {
   };
 
   const deleteCode = () => {
-    axios.post("http://localhost:4000/signup", { email: email, flag: 2 });
+    axios.post("http://192.168.1.242:4000/signup", { email: email, flag: 2 });
   };
 
   const onSubmit = (data) => {
     if (password === confirmPassword) {
       axios
-        .post("http://localhost:4000/signup", { ...data, flag: 0 })
+        .post("http://192.168.1.242:4000/signup", { ...data, flag: 0 })
         .then((res) => {
           setErr(Boolean(!res.data));
           if (Boolean(res.data)) {

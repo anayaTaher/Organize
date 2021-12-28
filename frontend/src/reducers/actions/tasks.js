@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwt from "jsonwebtoken";
 
-const server = "http://localhost:4000";
+const server = "http://192.168.1.242:4000";
 export const createTask = (data) => async (dispatch) => {
   try {
     const res = await axios.post(server + "/createTask", data);

@@ -3,10 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/contributor.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/contributor.route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/dashboard.navbar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dashboard.navbar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/dashboard.updateTask.imp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/dashboard.updateTask.imp.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/projects.createproject.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/projects.createproject.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/App.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/meeting/assets/js/events.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/meeting/assets/js/events.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/meeting/meeting.html" beforeDir="false" afterPath="$PROJECT_DIR$/backend/meeting/meeting.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/signup.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/signup.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ContactUs.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ContactUs.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ForgotPassword.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ForgotPassword.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Message.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Message.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ResetPassword.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/ResetPassword.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/header.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/header.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/action.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/action.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/contributors.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/contributors.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/projects.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/projects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/task.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/task.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/tasks.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/tasks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/reducers/actions/teams.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/reducers/actions/teams.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +57,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend/src/components" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="ts.external.directory.path" value="C:\Users\anaya\AppData\Local\JetBrains\Toolbox\apps\WebStorm\ch-0\213.5744.224\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
@@ -78,7 +95,7 @@
       <workItem from="1640584313524" duration="8763000" />
       <workItem from="1640606750788" duration="30903000" />
       <workItem from="1640643724268" duration="5341000" />
-      <workItem from="1640691464097" duration="607000" />
+      <workItem from="1640691464097" duration="16638000" />
     </task>
     <task id="LOCAL-00001" summary="For Demo">
       <created>1640541964056</created>
@@ -129,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640642099978</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Taher And Badawi6">
+      <created>1640696648935</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1640696648935</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

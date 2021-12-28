@@ -10,6 +10,7 @@ let userInfo = {}
 let idToken = {}
 
 router.post('/login', async (request, response) => {
+	console.log("Hello")
 	usersModel.checkUserAndEmail(request.body).then(res => response.json(res)).catch(err => response.json(err))
 })
 
@@ -58,7 +59,7 @@ router.post('/forgotPassword', async (request, response) => {
 		const secret = JWT_Secret + user.password
 		const payload = {email: user.email, id: user._id}
 		const token = jwt.sign(payload, secret, {expiresIn: "15m"})
-		const link = `http://localhost:3000/reset-password/${user._id}/${token}`
+		const link = `http://192.168.1.242:3000/reset-password/${user._id}/${token}`
 		confirmLinkModel.createNewLink(user._id, token)
 		
 		let transporter = nodemailer.createTransport({
