@@ -58,3 +58,13 @@ export const getProjectDetails = (data) => async (dispatch) => {
     console.log(err);
   }
 }
+
+export const getProjectOwner = (data) => async (dispatch) => {
+  try{
+    const res = await axios.post(server + "/getProjectOwner", data);
+    dispatch({type: "GET_PROJECT_OWNER", payload: res.data})
+  }
+  catch(err){
+    console.log(err);
+  }
+}

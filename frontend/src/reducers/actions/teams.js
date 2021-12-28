@@ -20,3 +20,13 @@ export const fetchTeams = (data) => async (dispatch) => {
         console.log(err);
     }
 }
+
+export const editTeam = async (data) => {
+    try{
+        const res = await axios.post(server + "/editTeam", data);
+        return res.status;
+    }
+    catch(err){
+        console.log(err);
+    }
+}

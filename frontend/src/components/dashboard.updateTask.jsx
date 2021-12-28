@@ -9,7 +9,7 @@ function UpdateTask() {
   const HandleMobileClose = () => setMobileOpen(!mobileOpen);
   return (
     <>
-      <Header flag={false} />
+      <Header flag={false} navbarMobile={setMobileOpen} />
       <Box component="div" sx={{ display: "flex" }}>
         <Navbar mobileOpen={mobileOpen} HandleMobileClose={HandleMobileClose} />
         <UpdateTaskImp />
