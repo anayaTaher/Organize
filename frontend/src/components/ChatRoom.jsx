@@ -18,12 +18,7 @@ const Home = () => {
 	
 	const user1 = auth.currentUser.uid
 	
-	const isImage = (file) =>
-		file.name.endsWith("jpeg") ||
-		file.name.endsWith("heif") ||
-		file.name.endsWith("png") ||
-		file.name.endsWith("gif") ||
-		file.name.endsWith("svg")
+	const isImage = (file) => file.name.endsWith("jpeg") || file.name.endsWith("heif") || file.name.endsWith("png") || file.name.endsWith("gif") || file.name.endsWith("svg")
 	
 	useEffect(() => {
 		const usersRef = collection(db, "users")
@@ -33,8 +28,7 @@ const Home = () => {
 			querySnapshot.forEach((doc) => {
 				if (doc._document.key.path.segments[6] !== user1) {
 					users.push({
-						...doc.data(),
-						uid: doc._document.key.path.segments[6]
+						...doc.data(), uid: doc._document.key.path.segments[6]
 					})
 				}
 			})
@@ -79,68 +73,44 @@ const Home = () => {
 		}
 		
 		await addDoc(collection(db, "messages", id, "chat"), {
-			text,
-			from: user1,
-			to: user2,
-			createdAt: Timestamp.fromDate(new Date()),
-			media: url || ""
+			text, from: user1, to: user2, createdAt: Timestamp.fromDate(new Date()), media: url || ""
 		})
 		
 		await setDoc(doc(db, "lastMsg", id), {
-			text,
-			from: user1,
-			to: user2,
-			createdAt: Timestamp.fromDate(new Date()),
-			media: url || "",
-			unread: true
+			text, from: user1, to: user2, createdAt: Timestamp.fromDate(new Date()), media: url || "", unread: true
 		})
 		
 		setText("")
 		setFile("")
 	}
-	return (
-		<>
-			<Header flag={true}/>
-			<div className="home_container">
-				<div className="users_container">
-					{users.map((user) => (
-						<User
-							key={user.uid}
-							user={user}
-							selectUser={selectUser}
-							user1={user1}
-							chat={chat}
-						/>
-					))}
-				</div>
-				<div className="messages_container">
-					{chat ? <>
-							<div className="messages_user">
-								<Avatar
-									src={chat.avatar || "https://via.placeholder.com/80x120/000080/FFF?text=" + chat.firstName[0]}
-									alt=""/>
-								<h3>{chat.firstName + " " + chat.lastName}</h3>
-							</div>
-							<div className="messages">
-								{msgs.length
-									? msgs.map((msg, i) => (
-										<Message key={i} msg={msg} user1={user1}/>
-									))
-									: null}
-							</div>
-							<MessageForm
-								handleSubmit={handleSubmit}
-								text={text}
-								setText={setText}
-								setImg={setFile}
-							/>
-						</>
-						: <h3 className="no_conv">Select a user to start conversation</h3>
-					}
-				</div>
+	return (<>
+		<Header flag={true}/>
+		<div className="home_container">
+			<div className="users_container">
+				{users.map((user) => (<User
+					key={user.uid}
+					user={user}
+					selectUser={selectUser}
+					user1={user1}
+					chat={chat}
+				/>))}
 			</div>
-		</>
-	)
+			<div className="messages_container">
+				{chat ? <>
+					<div className="messages_user">
+						<Avatar
+							src={chat.avatar || "https://via.placeholder.com/80x120/000080/FFF?text=" + chat.firstName[0]}
+							alt=""/>
+						<h3>{chat.firstName + " " + chat.lastName}</h3>
+					</div>
+					<div className="messages">
+						{msgs.length ? msgs.map((msg, i) => <Message key={i} msg={msg} user1={user1}/>) : null}
+					</div>
+					<MessageForm handleSubmit={handleSubmit} text={text} setText={setText} setImg={setFile}/>
+				</> : <h3 className="no_conv">Select a user to start conversation</h3>}
+			</div>
+		</div>
+	</>)
 }
 
 export default Home

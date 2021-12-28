@@ -1,5 +1,7 @@
 import helpers from './helpers.js'
 
+const tick = document.querySelector(".out-checkmark")
+
 window.addEventListener('load', () => {
 	//When the chat icon is clicked
 	document.querySelector('#toggle-chat-pane').addEventListener('click', (e) => {
@@ -44,7 +46,6 @@ window.addEventListener('load', () => {
 		}
 	})
 	
-	
 	//When the 'Create room" is button is clicked
 	document.getElementById('create-room').addEventListener('click', (e) => {
 		e.preventDefault()
@@ -83,12 +84,11 @@ window.addEventListener('load', () => {
 			localStorage.setItem('username', name)
 			
 			//reload room
-			location.href = "http://192.168.1.242:4000/?room=" + roomToken
+			location.href = "http://localhost:4000/?room=" + roomToken
 		} else {
 			document.querySelector('#err-msg-username').innerText = "Please input Room Token"
 		}
 	})
-	
 	
 	document.addEventListener('click', (e) => {
 		if (e.target && e.target.classList.contains('expand-remote-video')) {
@@ -98,12 +98,19 @@ window.addEventListener('load', () => {
 		}
 	})
 	
-	
 	document.getElementById('closeModal').addEventListener('click', () => {
 		helpers.toggleModal('recording-options-modal', false)
 	})
 	
 	document.getElementById("copyRoomToken").onclick = () => {
 		navigator.clipboard.writeText(location.href.split("room=")[1]).then()
+		tick.classList.add("show")
+		tick.classList.remove("hide")
+		
+		setTimeout(() => {
+			tick.classList.add("hide")
+			tick.classList.remove("show")
+		}, 3000)
+		
 	}
 })

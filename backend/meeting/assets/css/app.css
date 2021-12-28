@@ -1,75 +1,81 @@
-.chat-col {
-    right: -100vw;
-    bottom: 0;
-    top: 40.5px;
-    z-index: 1000;
-    position: fixed;
-    color: #fff;
-    padding: 15px 5px 40px;
-    min-height: 100vh;
+.checkmark {
+    transform: rotate(45deg) translate(-1px, -1px);
+    height: 10px;
+    width: 6px;
+    border-bottom: 2.5px solid #0dd50d;
+    border-right: 2.5px solid #0dd50d;
 }
 
-.chat-col.chat-opened {
-    right: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    transition: all 0.3s ease !important;
-    -webkit-transition: all 0.3s ease !important;
-    -moz-transition: all 0.3s ease !important;
+.out-checkmark {
+    background-color: #FFF;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#chat-messages {
-    height: 70vh;
-    margin-bottom: 20px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+.show {
+    visibility: visible;
 }
 
-#chat-messages::-webkit-scrollbar {
-    width: 0; /* remove scrollbar space */
-    background: transparent;
+.hide {
+    visibility: hidden;
 }
 
-.chat-box {
-    bottom: 30px;
-    right: 0;
-    position: absolute;
-    border: 0;
-    border-top: 1px groove white;
-    border-left: 1px groove white;
-    font-size: small;
+h5 {
+    width: 33vw;
+    text-align: center;
+    border-bottom: 1px solid #000;
+    line-height: 0.1em;
+    margin: 15px auto -20px !important;
 }
 
-.chat-box::placeholder {
-    font-size: small;
-    font-weight: lighter;
-    font-style: italic;
+h5 span {
+    color: #FFF;
+    background-color: #26a69a !important;
+    display: inline-flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    padding: 0 10px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 20px;
 }
 
-.chat-box,
-.chat-box:focus {
-    resize: none !important;
-    box-shadow: none !important;
+div.create-room, div.join-room {
+    background-color: #FFF !important;
+    margin-top: 60px;
+    border-radius: 10px;
 }
 
-.chat-row {
-    height: 100%;
-    overflow-x: scroll;
+#room-created {
+    width: 95%;
+    margin: 0 auto;
+}
+
+#room-created:empty {
+    visibility: hidden;
 }
 
 .main {
     padding-top: 40px;
 }
 
-
 .remote-video {
     width: 100%;
     height: auto;
     max-height: 90vh;
+    position: relative;
+    top: 5px;
+    margin-right: 5px;
+    border: 3px solid #26a69a;
+    border-radius: 5px;
+    padding: 1px;
 }
-
 
 .remote-video-controls {
     position: absolute;
@@ -79,19 +85,20 @@
     padding: 10px;
     width: 100%;
     text-align: center;
-    visibility: hidden;
 }
 
 
-.remote-video:hover + .remote-video-controls,
-.remote-video-controls:hover {
+.remote-video:hover + .remote-video-controls, .remote-video-controls:hover {
     visibility: visible;
 }
 
 
 .local-video {
-    bottom: 0;
-    left: 0;
+    bottom: 2px;
+    left: 2px;
+    border: 3px solid #26a69a;
+    border-radius: 5px;
+    padding: 1px;
     position: fixed;
     width: 15vw;
 }
@@ -111,19 +118,12 @@
     align-self: flex-end;
 }
 
-
 .msg {
     font-weight: 400;
     font-size: 12px;
     color: black;
     background-color: wheat;
 }
-
-
-.chat-card {
-    border-radius: 6px;
-}
-
 
 .btn-no-effect:focus {
     box-shadow: none;
@@ -132,7 +132,6 @@
 .very-small {
     font-size: 6px !important;
 }
-
 
 #close-single-peer-btn {
     position: fixed;
@@ -144,21 +143,18 @@
     z-index: 100;
 }
 
-
 .pointer {
     cursor: pointer;
 }
 
-
 .record-option {
     height: 200px;
     border-radius: 10%;
-    border: 1px solid #17a2b8;
+    border: 1px solid #26a69a;
     cursor: pointer;
     padding: 10px;
     vertical-align: middle;
 }
-
 
 .custom-modal {
     display: none;
@@ -171,17 +167,15 @@
     overflow: auto;
 }
 
-
 .custom-modal-content {
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #17a2b8;
+    border: 1px solid #26a69a;
     width: 80%;
 }
 
-
-@keyframes animatetop {
+@keyframes animate-top {
     from {
         top: -300px;
         opacity: 0
@@ -192,29 +186,7 @@
     }
 }
 
-
 @media only screen and (max-width: 767px) {
-    .chat-col {
-        right: -100vw;
-        width: 100vw;
-        z-index: 99999;
-        transition: 0.3s;
-        top: 47px;
-    }
-
-    .chat-opened::-webkit-scrollbar {
-        display: none;
-    }
-
-    #chat-messages {
-        height: 60vh;
-    }
-
-    .chat-box {
-        bottom: 90px;
-        margin-bottom: 0;
-    }
-
     .card-sm {
         max-width: 100%;
         min-width: 50%;
@@ -225,7 +197,6 @@
         width: 40vw;
     }
 }
-
 
 @media (min-width: 768px) {
     .card {

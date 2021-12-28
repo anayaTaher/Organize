@@ -1,7 +1,13 @@
 import React from "react"
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
-const Loading = () => <div style={{position: "relative"}}>
-	<h2 style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>Loading...</h2>
-</div>
+const Loading = () => {
+	return <>
+		<Backdrop sx={{color: '#fff', zIndex: theme => theme.zIndex.drawer + 1}} open={true}>
+			<CircularProgress color="inherit"/>
+		</Backdrop>
+	</>
+}
 
 export default Loading
