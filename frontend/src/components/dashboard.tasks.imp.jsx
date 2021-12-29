@@ -94,10 +94,10 @@ function TasksImp() {
               labelId="sort-by"
               startAdornment={<SortIcon sx={{ mr: 1 }} />}
             >
-              <MenuItem value="taskName">Name</MenuItem>
-              <MenuItem value="taskDeadline">Deadline</MenuItem>
-              <MenuItem value="taskState">State</MenuItem>
-              <MenuItem value="taskWeight">Weight</MenuItem>
+              <MenuItem value="name">Name</MenuItem>
+              <MenuItem value="deadline">Deadline</MenuItem>
+              <MenuItem value="state">State</MenuItem>
+              <MenuItem value="weight">Weight</MenuItem>
             </Select>
           </FormControl>
         </Box>

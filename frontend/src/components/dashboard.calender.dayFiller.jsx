@@ -24,7 +24,7 @@ function CalenderDay({ radiusPosition, tasksInWeek }) {
     linearProgressFiller.push(
       <LinearProgress
         sx={{
-          height: 10,
+          height: 7,
           mb: 2,
           opacity: "0%",
         }}
@@ -41,7 +41,7 @@ function CalenderDay({ radiusPosition, tasksInWeek }) {
           flexDirection: "column",
           width: "100%",
           border: 1,
-          minHeight: "150px",
+          minHeight: "120px",
           borderRadius: boxBorderRadius,
           color: "black",
           backgroundColor: "#e3e3e3",

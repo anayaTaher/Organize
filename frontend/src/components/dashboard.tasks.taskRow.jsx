@@ -62,31 +62,31 @@ function TaskRow(props) {
     dispatch(removeTask({ projectId: params.id, taskId: props.taskId }));
   };
 
-  let taskIcon = <CheckIcon sx={{ color: "green" }} />;
+  let taskIcon = <CheckIcon sx={{ color: "#4caf50" }} />;
   let taskTooltipTitle = "Task is complete";
   switch (props.taskState) {
     case "inProgress":
-      taskIcon = <DoubleArrowIcon sx={{ color: "dodgerblue" }} />;
+      taskIcon = <DoubleArrowIcon sx={{ color: "#2196f3" }} />;
       taskTooltipTitle = "Task in progress";
       break;
     case "behind":
-      taskIcon = <CloseIcon sx={{ color: "red" }} />;
+      taskIcon = <CloseIcon sx={{ color: "#f44336" }} />;
       taskTooltipTitle = "Task is behind the schedule!";
       break;
     case "onHold":
-      taskIcon = <MoreHorizIcon sx={{ color: "orange" }} />;
+      taskIcon = <MoreHorizIcon sx={{ color: "#ff9800" }} />;
       taskTooltipTitle = "Prerequisit task is not complete";
       break;
     case "notStarted":
-      taskIcon = <MoreHorizIcon sx={{ color: "gray" }} />;
+      taskIcon = <MoreHorizIcon sx={{ color: "#607d8b" }} />;
       taskTooltipTitle = "Task has not been worked on yet";
     case "onHoldBehind":
-      taskIcon = <CloseIcon sx={{ color: "red" }} />;
+      taskIcon = <CloseIcon sx={{ color: "#f44336" }} />;
       taskTooltipTitle =
         "Prerequisit task is not complete, task is behind the  schedule!";
       break;
     case "pending":
-      taskIcon = <PendingActionsOutlinedIcon sx={{ color: "purple" }} />;
+      taskIcon = <PendingActionsOutlinedIcon sx={{ color: "#673ab7" }} />;
       taskTooltipTitle = "Task is awaiting approval";
       break;
     default:

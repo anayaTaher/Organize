@@ -45,22 +45,22 @@ function Task() {
     let color = "green";
     switch (state) {
       case "inProgress":
-        color = "dodgerblue";
+        color = "#2196f3";
         break;
       case "behind":
-        color = "red";
+        color = "#f44336";
         break;
       case "onHold":
-        color = "orange";
+        color = "#ff9800";
         break;
       case "notStarted":
-        color = "gray";
+        color = "#607d8b"
         break;
-      case "onHoldBehind":
-        color = "red";
+      case "onHoldBehind": 
+        color = "#f44336";
         break;
       case "pending":
-        color = "purple"
+        color = "#673ab7";
         break;
       default:
         break;

@@ -41,6 +41,6 @@ app.use("/", announcementRoutes)
 
 app.use('/assets', express.static(path.join(__dirname, '/meeting/assets')))
 io.of('/stream').on('connection', stream)
-app.get("/", (req, res) => res.sendFile(__dirname + "/meeting/meeting.html"))
+app.get("/:id", (req, res) => res.sendFile(__dirname + "/meeting/meeting.html"))
 
 server.listen(4000, "0.0.0.0", () => console.log("Server Is Listening On Port 4000..."))

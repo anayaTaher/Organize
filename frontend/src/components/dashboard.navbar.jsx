@@ -18,7 +18,7 @@ import TaskIcon from "@mui/icons-material/Task";
 import ContributorsIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
 import AboutProjectIcon from "@mui/icons-material/Help";
-import ProjectReportsIcon from "@mui/icons-material/Analytics";
+import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import ProjectDetailsIcon from "@mui/icons-material/Business";
 import NavigateIcon from "@mui/icons-material/Navigation";
 import Logo from "../assets/logo/logo.png";
@@ -266,6 +266,19 @@ function Navbar(props) {
                   />
                 </ListItemButton>
               </ListItem>
+              <ListItem sx={{ pb: 0, pt: 0 }}>
+                <ListItemButton
+                  onClick={() => history.push(`/projects/${params.id}/reports`)}
+                >
+                  <ListItemIcon>
+                    <InsertChartOutlinedIcon sx={{ color: "#708090" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "#708090" }}
+                    primary={"Reports"}
+                  />
+                </ListItemButton>
+              </ListItem>
             </>
           )}
           <ListItem>
@@ -451,6 +464,19 @@ function Navbar(props) {
                   <ListItemText
                     sx={{ color: "#708090" }}
                     primary={"New Team"}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem sx={{ pb: 0, pt: 0 }}>
+                <ListItemButton
+                  onClick={() => history.push(`/projects/${params.id}/reports`)}
+                >
+                  <ListItemIcon>
+                    <InsertChartOutlinedIcon sx={{ color: "#708090" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "#708090" }}
+                    primary={"Reports"}
                   />
                 </ListItemButton>
               </ListItem>

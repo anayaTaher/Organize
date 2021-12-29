@@ -24,6 +24,7 @@ import NewTeam from "./components/dashboard.newTeam"
 import Task from "./components/dashboard.task"
 import Teams from "./components/dashboard.teams"
 import EditTeam from "./components/dashboard.editTeam"
+import Reports from "./components/dashboard.reports"
 
 let mainTheme = createTheme({
 	typography: {fontFamily: "Roboto"},
@@ -49,6 +50,7 @@ const App = () => {
 						<PrivateRoute toLogin={false} path="/signup" component={SignUp}/>
 						<PrivateRoute toLogin={false} path="/forgotPassword" component={ForgotPassword}/>
 						<PrivateRoute toLogin={false} path="/reset-password/:id/:token" component={ResetPassword}/>
+						<PrivateRoute toLogin={true} path="/projects/:id/reports" component={Reports}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/chat" component={ChatRoom}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/updateTask/:tid" component={UpdateTask}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/task/:tid" component={Task}/>

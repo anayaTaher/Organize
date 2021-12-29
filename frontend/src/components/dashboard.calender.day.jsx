@@ -31,37 +31,37 @@ function CalenderDay({
   tasksBlock.forEach((taskBlock) => {
     let taskProgressBorderRadius = "0 0 0 0";
     if (taskBlock.isFirstDay) {
-      taskProgressBorderRadius = "10px 0 0 10px";
+      taskProgressBorderRadius = "4px 0 0 4px";
     }
     if (taskBlock.isLastDay) {
-      taskProgressBorderRadius = "0 10px 10px 0";
+      taskProgressBorderRadius = "0 4px 4px 0";
     }
     if (taskBlock.isFirstDay && taskBlock.isLastDay) {
-      taskProgressBorderRadius = "10px 10px 10px 10px";
+      taskProgressBorderRadius = "4px 4px 4px 4px";
     }
     progressBorderRadius.push(taskProgressBorderRadius);
   });
 
   const getColor = (taskState) => {
-    let color = "green";
+    let color = "#4caf50";
     switch (taskState) {
       case "inProgress":
-        color = "dodgerblue";
+        color = "#2196f3";
         break;
       case "behind":
-        color = "red";
+        color = "#f44336";
         break;
       case "onHold":
-        color = "orange";
+        color = "#ff9800";
         break;
       case "notStarted":
-        color = "lightgray"
+        color = "#607d8b"
         break;
       case "onHoldBehind": 
-        color = "red";
+        color = "#f44336";
         break;
       case "pending":
-        color = "purple";
+        color = "#673ab7";
         break;
       default:
         break;
@@ -78,7 +78,7 @@ function CalenderDay({
           width: "100%",
           border: 1,
           borderColor: "black",
-          minHeight: "150px",
+          minHeight: "120px",
           borderRadius: boxBorderRadius,
           boxShadow: isToday ? "0px 0px 0px 3px lightseagreen inset" : "",
         }}
@@ -104,7 +104,7 @@ function CalenderDay({
             <Tooltip key={i} title={task.taskName}>
               <LinearProgress
                 sx={{
-                  height: 10,
+                  height: 7,
                   ml: task.isFirstDay ? { xs: 2, md: 4 } : 0,
                   mr: task.isLastDay ? { xs: 2, md: 4 } : 0,
                   mb: 2,
