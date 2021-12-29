@@ -12,7 +12,7 @@ import {
   Menu,
   MenuItem,
   Tooltip,
-  Typography
+  Typography,
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -58,7 +58,7 @@ function Header({ flag = true, navbarMobile }) {
       .update({ isOnline: false });
     await auth.signOut();
     localStorage.removeItem("token");
-    history.push("/chat-room");
+    history.push("/");
   };
   const { user } = useContext(AuthContext);
   const currentUser = useSelector((state) => state.auth);
@@ -116,29 +116,6 @@ function Header({ flag = true, navbarMobile }) {
                 )}
               </>
             )}
-            {user && flag && (
-              <Link
-                href="/chat-room"
-                underline="none"
-                variant="h6"
-                sx={{ mr: 5, fontWeight: 500 }}
-              >
-                Chat Room
-              </Link>
-            )}
-            {user && flag && (
-              <Link
-                onClick={() =>
-                  (window.location.href = "http://localhost:4000/")
-                }
-                href="#"
-                underline="none"
-                variant="h6"
-                sx={{ mr: 5, fontWeight: 500 }}
-              >
-                Video Calling
-              </Link>
-            )}
           </ToolBar>
           {flag ? (
             <>
@@ -163,18 +140,21 @@ function Header({ flag = true, navbarMobile }) {
               </Box>
             </>
           )}
-          { user && 
-          <ToolBar sx={{ justifyContent: "flex-end" }}>
-            <Tooltip title="Account settings">
-              <IconButton onClick={handleClick}>
-                <Avatar src={currentUser?.image} alt="/o/" />
-              </IconButton>
-            </Tooltip>
-            <Box sx={{display: {xs:'none', md: 'block'}}}>
-              <Typography variant="body2" sx={{color: flag ? 'black' : 'white', ml: 1}}>{`${currentUser?.firstName} ${currentUser?.lastName}`}</Typography>
-            </Box>
-          </ToolBar>
-          }
+          {user && (
+            <ToolBar sx={{ justifyContent: "flex-end" }}>
+              <Tooltip title="Account settings">
+                <IconButton onClick={handleClick}>
+                  <Avatar src={currentUser?.image} alt="/o/" />
+                </IconButton>
+              </Tooltip>
+              <Box sx={{ display: { xs: "none", md: "block" } }}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: flag ? "black" : "white", ml: 1 }}
+                >{`${currentUser?.firstName} ${currentUser?.lastName}`}</Typography>
+              </Box>
+            </ToolBar>
+          )}
         </ToolBar>
       </AppBar>
       <Drawer
@@ -223,39 +203,6 @@ function Header({ flag = true, navbarMobile }) {
               <Divider />
             </>
           )}
-          {user && (
-            <>
-              <Link href="/chat-room" color="#000000" underline="none">
-                <ListItem>
-                  <ListItemButton>
-                    <ChatIcon sx={{ mr: 1 }} />
-                    Chat room
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-              <Divider />
-            </>
-          )}
-          {user && (
-            <>
-              <Link
-                href="#"
-                color="#000000"
-                underline="none"
-                onClick={() =>
-                  (window.location.href = "http://localhost:4000/")
-                }
-              >
-                <ListItem>
-                  <ListItemButton>
-                    <PersonalVideoIcon sx={{ mr: 1 }} />
-                    Video Calling
-                  </ListItemButton>
-                </ListItem>
-              </Link>
-              <Divider />
-            </>
-          )}
         </List>
       </Drawer>
       {user !== null && (
@@ -294,7 +241,7 @@ function Header({ flag = true, navbarMobile }) {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem>
-            <Avatar src={currentUser?.image}/> Profile
+            <Avatar src={currentUser?.image} /> Profile
           </MenuItem>
           <Divider />
           <MenuItem>

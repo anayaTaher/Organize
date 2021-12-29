@@ -49,7 +49,7 @@ const App = () => {
 						<PrivateRoute toLogin={false} path="/signup" component={SignUp}/>
 						<PrivateRoute toLogin={false} path="/forgotPassword" component={ForgotPassword}/>
 						<PrivateRoute toLogin={false} path="/reset-password/:id/:token" component={ResetPassword}/>
-						<PrivateRoute toLogin={true} path="/chat-room" component={ChatRoom}/>
+						<PrivateRoute toLogin={true} path="/projects/:id/chat" component={ChatRoom}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/updateTask/:tid" component={UpdateTask}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/task/:tid" component={Task}/>
 						<PrivateRoute toLogin={true} path="/projects/:id/editTeam/:tid" component={EditTeam}/>

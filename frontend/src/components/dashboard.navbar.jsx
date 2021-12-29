@@ -33,77 +33,48 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProjectDetails } from "../reducers/actions/projects";
 import { fetchTasks } from "../reducers/actions/tasks";
 import React from "react";
+import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
+import OndemandVideoOutlinedIcon from "@mui/icons-material/OndemandVideoOutlined";
+import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+import { isProjectOwner } from "../reducers/actions/projects";
 
-const drawerWidth = 280
+const drawerWidth = 280;
 
 const drawerItems = [
-	{
-		text: "Announcements",
-		icon: AnnouncementIcon,
-		isBadge: false,
-		href: "announcements"
-	},
-	{
-		text: "Calendar",
-		icon: CalendarTodayIcon,
-		isBadge: false,
-		href: ""
-	},
-	{
-		text: "Tasks",
-		icon: TaskIcon,
-		isBadge: false,
-		badgeContent: 0,
-		href: "tasks"
-	},
-	{
-		text: "New Task",
-		icon: AddIcon,
-		isBadge: false,
-		href: "newTask"
-	},
-	
-	// {
-	//   text: "Settings",
-	//   icon: SettingsIcon,
-	//   isBadge: false,
-	//   badgeContent: 0,
-	//   href: "#",
-	// },
-	{
-		text: "Contributors",
-		icon: GroupsIcon,
-		isBadge: false,
-		badgeContent: 0,
-		href: "contributors"
-	},
-	{
-		text: "Teams",
-		icon: ContributorsIcon,
-		isBadge: false,
-		href: "teams"
-	},
-	{
-		text: "New Team",
-		icon: GroupAddIcon,
-		isBadge: false,
-		href: "newTeam"
-	}
-	// {
-	//   text: "About Project",
-	//   icon: AboutProjectIcon,
-	//   isBadge: false,
-	//   badgeContent: 0,
-	//   href: "#",
-	// },
-	// {
-	//   text: "Project Reports",
-	//   icon: ProjectReportsIcon,
-	//   isBadge: false,
-	//   badgeContent: 0,
-	//   href: "#",
-	// },
-]
+  {
+    text: "Announcements",
+    icon: AnnouncementIcon,
+    isBadge: false,
+    href: "announcements",
+  },
+  {
+    text: "Calendar",
+    icon: CalendarTodayIcon,
+    isBadge: false,
+    href: "",
+  },
+  {
+    text: "Tasks",
+    icon: TaskIcon,
+    isBadge: false,
+    badgeContent: 0,
+    href: "tasks",
+  },
+  {
+    text: "Contributors",
+    icon: GroupsIcon,
+    isBadge: false,
+    badgeContent: 0,
+    href: "contributors",
+  },
+  {
+    text: "Teams",
+    icon: ContributorsIcon,
+    isBadge: false,
+    href: "teams",
+  },
+];
 
 function Navbar(props) {
   const history = useHistory();
@@ -111,6 +82,7 @@ function Navbar(props) {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.tasks);
   const projectDetails = useSelector((state) => state.projectDetails);
+  const owner = useSelector((state) => state.owner);
 
   let tasksDone = 0;
   let progress = 0;
@@ -127,6 +99,7 @@ function Navbar(props) {
   React.useEffect(() => {
     dispatch(getProjectDetails({ projectId: params.id }));
     dispatch(fetchTasks({ projectId: params.id }));
+    dispatch(isProjectOwner({ projectId: params.id }));
   }, [dispatch]);
   return (
     <>
@@ -141,13 +114,18 @@ function Navbar(props) {
           display: { xs: "none", md: "block" },
         }}
       >
-        <Toolbar sx={{":hover": {cursor: 'pointer'}}} onClick={() => {history.push("/")}}>
+        <Toolbar
+          sx={{ ":hover": { cursor: "pointer" } }}
+          onClick={() => {
+            history.push("/");
+          }}
+        >
           <Avatar
             alt="Organize"
             src={Logo}
             sx={{ mr: 1, display: { xs: "none", md: "block" } }}
           />
-            <Typography variant="h6">Organize</Typography>
+          <Typography variant="h6">Organize</Typography>
         </Toolbar>
         <Divider />
         <List dense={true}>
@@ -247,6 +225,85 @@ function Navbar(props) {
               </ListItemButton>
             </ListItem>
           ))}
+          {owner && (
+            <>
+              <ListItem>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", width: "100%" }}
+                >
+                  <AdminPanelSettingsOutlinedIcon
+                    sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+                  />
+                  <Typography variant="overline" sx={{ color: "#708090" }}>
+                    Admin
+                  </Typography>
+                  <Divider variant="middle" sx={{ flexGrow: 1 }} />
+                </Box>
+              </ListItem>
+              <ListItem key={"newTask"} sx={{ pb: 0, pt: 0 }}>
+                <ListItemButton
+                  onClick={() => history.push(`/projects/${params.id}/newTask`)}
+                >
+                  <ListItemIcon>
+                    <AddIcon sx={{ color: "#708090" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "#708090" }}
+                    primary={"New Task"}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem sx={{ pb: 0, pt: 0 }}>
+                <ListItemButton
+                  onClick={() => history.push(`/projects/${params.id}/newTeam`)}
+                >
+                  <ListItemIcon>
+                    <GroupAddIcon sx={{ color: "#708090" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "#708090" }}
+                    primary={"New Team"}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </>
+          )}
+          <ListItem>
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <PublicOutlinedIcon
+                sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+              />
+              <Typography variant="overline" sx={{ color: "#708090" }}>
+                Social
+              </Typography>
+              <Divider variant="middle" sx={{ flexGrow: 1 }} />
+            </Box>
+          </ListItem>
+          <ListItem key={"chat"} sx={{ pb: 0, pt: 0 }}>
+            <ListItemButton
+              onClick={() => history.push(`/projects/${params.id}/chat`)}
+            >
+              <ListItemIcon>
+                <ChatOutlinedIcon sx={{ color: "#708090" }} />
+              </ListItemIcon>
+              <ListItemText sx={{ color: "#708090" }} primary={"Chat"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"video"} sx={{ pb: 0, pt: 0 }}>
+            <ListItemButton
+              onClick={() =>
+                (window.location.href = `http://localhost:4000/${params.id}`)
+              }
+            >
+              <ListItemIcon>
+                <OndemandVideoOutlinedIcon sx={{ color: "#708090" }} />
+              </ListItemIcon>
+              <ListItemText
+                sx={{ color: "#708090" }}
+                primary={"Video Meetings"}
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
       <Drawer
@@ -356,10 +413,89 @@ function Navbar(props) {
               </ListItemButton>
             </ListItem>
           ))}
+          {owner && (
+            <>
+              <ListItem>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", width: "100%" }}
+                >
+                  <AdminPanelSettingsOutlinedIcon
+                    sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+                  />
+                  <Typography variant="overline" sx={{ color: "#708090" }}>
+                    Admin
+                  </Typography>
+                  <Divider variant="middle" sx={{ flexGrow: 1 }} />
+                </Box>
+              </ListItem>
+              <ListItem key={"newTask"} sx={{ pb: 0, pt: 0 }}>
+                <ListItemButton
+                  onClick={() => history.push(`/projects/${params.id}/newTask`)}
+                >
+                  <ListItemIcon>
+                    <AddIcon sx={{ color: "#708090" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "#708090" }}
+                    primary={"New Task"}
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem sx={{ pb: 0, pt: 0 }}>
+                <ListItemButton
+                  onClick={() => history.push(`/projects/${params.id}/newTeam`)}
+                >
+                  <ListItemIcon>
+                    <GroupAddIcon sx={{ color: "#708090" }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    sx={{ color: "#708090" }}
+                    primary={"New Team"}
+                  />
+                </ListItemButton>
+              </ListItem>
+            </>
+          )}
+          <ListItem>
+            <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+              <PublicOutlinedIcon
+                sx={{ mr: 1, width: 20, height: 20, color: "#708090" }}
+              />
+              <Typography variant="overline" sx={{ color: "#708090" }}>
+                Social
+              </Typography>
+              <Divider variant="middle" sx={{ flexGrow: 1 }} />
+            </Box>
+          </ListItem>
+          <ListItem key={"chat"} sx={{ pb: 0, pt: 0 }}>
+            <ListItemButton
+              onClick={() => history.push(`/projects/${params.id}/chat`)}
+            >
+              <ListItemIcon>
+                <ChatOutlinedIcon sx={{ color: "#708090" }} />
+              </ListItemIcon>
+              <ListItemText sx={{ color: "#708090" }} primary={"Chat"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem key={"video"} sx={{ pb: 0, pt: 0 }}>
+            <ListItemButton
+              onClick={() =>
+                (window.location.href = `http://localhost:4000/${params.id}`)
+              }
+            >
+              <ListItemIcon>
+                <OndemandVideoOutlinedIcon sx={{ color: "#708090" }} />
+              </ListItemIcon>
+              <ListItemText
+                sx={{ color: "#708090" }}
+                primary={"Video Meetings"}
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
     </>
   );
 }
 
-export default Navbar
+export default Navbar;

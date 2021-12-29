@@ -77,4 +77,28 @@ router.post("/getProjectOwner", async (req, res) => {
   }
 })
 
+router.post("/getProjectMembers", async (req, res) => {
+  try{
+    const projectId = req.body.projectId;
+    const project = await ProjectModel.findOne({_id: projectId});
+    const contributors = project.contributors;
+    let users = [];
+    for(const contributor of contributors) {
+      const userData = await UserModel.template.findOne({_id: contributor})
+      const user = {
+        _id: userData._id,
+        username: userData.username,
+      }
+      users.push(user);
+    }
+    const user = await UserModel.template.findOne({_id: project.owner})
+    users.push({_id: user._id, username: user.username});
+    console.log(users);
+    res.status(201).json(users);
+  }
+  catch(err){
+    console.log(err);
+  }
+})
+
 module.exports = router;
