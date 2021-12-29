@@ -83,7 +83,7 @@ export default function SignUp() {
         dispatch(signIn(data));
       });
   };
-
+ 
   const signUpWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth

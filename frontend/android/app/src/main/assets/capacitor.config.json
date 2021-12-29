@@ -1,0 +1,6 @@
+{
+	"appId": "edu.najah.app",
+	"appName": "organize",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}
