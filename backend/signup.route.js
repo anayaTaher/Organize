@@ -10,6 +10,7 @@ let userInfo = {}
 let idToken = {}
 
 router.post('/login', async (request, response) => {
+	console.log("Hello")
 	usersModel.checkUserAndEmail(request.body).then(res => response.json(res)).catch(err => response.json(err))
 })
 

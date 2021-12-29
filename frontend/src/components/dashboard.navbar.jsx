@@ -34,76 +34,76 @@ import { getProjectDetails } from "../reducers/actions/projects";
 import { fetchTasks } from "../reducers/actions/tasks";
 import React from "react";
 
-const drawerWidth = 280;
+const drawerWidth = 280
 
 const drawerItems = [
-  {
-    text: "Announcements",
-    icon: AnnouncementIcon,
-    isBadge: false,
-    href: "announcements",
-  },
-  {
-    text: "Calendar",
-    icon: CalendarTodayIcon,
-    isBadge: false,
-    href: "",
-  },
-  {
-    text: "Tasks",
-    icon: TaskIcon,
-    isBadge: false,
-    badgeContent: 0,
-    href: "tasks",
-  },
-  {
-    text: "New Task",
-    icon: AddIcon,
-    isBadge: false,
-    href: "newTask",
-  },
-
-  // {
-  //   text: "Settings",
-  //   icon: SettingsIcon,
-  //   isBadge: false,
-  //   badgeContent: 0,
-  //   href: "#",
-  // },
-  {
-    text: "Contributors",
-    icon: GroupsIcon,
-    isBadge: false,
-    badgeContent: 0,
-    href: "contributors",
-  },
-  {
-    text: "Teams",
-    icon: ContributorsIcon,
-    isBadge: false,
-    href: "teams",
-  },
-  {
-    text: "New Team",
-    icon: GroupAddIcon,
-    isBadge: false,
-    href: "newTeam",
-  },
-  // {
-  //   text: "About Project",
-  //   icon: AboutProjectIcon,
-  //   isBadge: false,
-  //   badgeContent: 0,
-  //   href: "#",
-  // },
-  // {
-  //   text: "Project Reports",
-  //   icon: ProjectReportsIcon,
-  //   isBadge: false,
-  //   badgeContent: 0,
-  //   href: "#",
-  // },
-];
+	{
+		text: "Announcements",
+		icon: AnnouncementIcon,
+		isBadge: false,
+		href: "announcements"
+	},
+	{
+		text: "Calendar",
+		icon: CalendarTodayIcon,
+		isBadge: false,
+		href: ""
+	},
+	{
+		text: "Tasks",
+		icon: TaskIcon,
+		isBadge: false,
+		badgeContent: 0,
+		href: "tasks"
+	},
+	{
+		text: "New Task",
+		icon: AddIcon,
+		isBadge: false,
+		href: "newTask"
+	},
+	
+	// {
+	//   text: "Settings",
+	//   icon: SettingsIcon,
+	//   isBadge: false,
+	//   badgeContent: 0,
+	//   href: "#",
+	// },
+	{
+		text: "Contributors",
+		icon: GroupsIcon,
+		isBadge: false,
+		badgeContent: 0,
+		href: "contributors"
+	},
+	{
+		text: "Teams",
+		icon: ContributorsIcon,
+		isBadge: false,
+		href: "teams"
+	},
+	{
+		text: "New Team",
+		icon: GroupAddIcon,
+		isBadge: false,
+		href: "newTeam"
+	}
+	// {
+	//   text: "About Project",
+	//   icon: AboutProjectIcon,
+	//   isBadge: false,
+	//   badgeContent: 0,
+	//   href: "#",
+	// },
+	// {
+	//   text: "Project Reports",
+	//   icon: ProjectReportsIcon,
+	//   isBadge: false,
+	//   badgeContent: 0,
+	//   href: "#",
+	// },
+]
 
 function Navbar(props) {
   const history = useHistory();
@@ -362,4 +362,4 @@ function Navbar(props) {
   );
 }
 
-export default Navbar;
+export default Navbar

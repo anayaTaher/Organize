@@ -22,10 +22,10 @@ mongoose.connect(
 	process.env.DATABASE_ACCESS,
 	{
 		useNewUrlParser: true,
-		useUnifiedTopology: true,
+		useUnifiedTopology: true
 	},
 	() => console.log("Database Successfully Connected")
-);
+)
 
 app.get("")
 
@@ -43,4 +43,4 @@ app.use('/assets', express.static(path.join(__dirname, '/meeting/assets')))
 io.of('/stream').on('connection', stream)
 app.get("/", (req, res) => res.sendFile(__dirname + "/meeting/meeting.html"))
 
-server.listen(4000, () => console.log("Server Is Listening On Port 4000..."))
+server.listen(4000, "0.0.0.0", () => console.log("Server Is Listening On Port 4000..."))
