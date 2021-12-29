@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi7">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.css" afterDir="false" />
+    <list default="true" id="5dbddb09-f9d7-4495-846f-fabe583b941a" name="Changes" comment="Taher And Badawi8">
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Loading.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Loading.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/SignUp.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +74,7 @@
       <workItem from="1640584313524" duration="8763000" />
       <workItem from="1640606750788" duration="30903000" />
       <workItem from="1640643724268" duration="5341000" />
-      <workItem from="1640691464097" duration="24033000" />
+      <workItem from="1640691464097" duration="24167000" />
     </task>
     <task id="LOCAL-00001" summary="For Demo">
       <created>1640541964056</created>
@@ -150,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1640735581951</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Taher And Badawi8">
+      <created>1640738480306</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1640738480306</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -177,6 +180,7 @@
     <MESSAGE value="Taher And Badawi5" />
     <MESSAGE value="Taher And Badawi6" />
     <MESSAGE value="Taher And Badawi7" />
-    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi7" />
+    <MESSAGE value="Taher And Badawi8" />
+    <option name="LAST_COMMIT_MESSAGE" value="Taher And Badawi8" />
   </component>
 </project>
