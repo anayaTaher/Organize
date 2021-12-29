@@ -25,6 +25,7 @@ import {
   fetchContributors,
 } from "../reducers/actions/contributors";
 import PeopleIcon from "@mui/icons-material/PeopleAlt";
+import { fetchTasks } from "../reducers/actions/tasks";
 
 const modalBoxStyle = {
   height: 200,
@@ -83,6 +84,7 @@ function ContributorsImp() {
   const [searchValue, setSearchValue] = React.useState("");
   const teams = useSelector((state) => state.teams);
   const owner = useSelector((state) => state.owner);
+  const tasks = useSelector((state) => state.tasks);
 
   const contributorsDisplayed = React.useMemo(() => {
     console.log(team);
@@ -120,6 +122,7 @@ function ContributorsImp() {
     dispatch(fetchContributors({ projectId: params.id }));
     dispatch(fetchTeams({ projectId: params.id }));
     dispatch(isProjectOwner({ projectId: params.id }));
+    dispatch(fetchTasks({ projectId: params.id }));
   }, [dispatch]);
 
   return (
@@ -227,6 +230,14 @@ function ContributorsImp() {
           </Grid>
         </Grid>
         {contributorsDisplayed.map((contributor) => {
+          const workingTasks = tasks.filter((task) => {
+            const workingSubtasks = task.subtasks.filter(
+              (subtask) => 
+                subtask.worker == contributor._id &&
+                subtask.finisher != contributor._id
+            );
+            if (workingSubtasks?.length > 0) return task;
+          });
           return (
             <ProjectContributor
               key={contributor._id}
@@ -235,6 +246,7 @@ function ContributorsImp() {
               lastName={contributor.lastName}
               teams={contributor.teams}
               owner={owner}
+              tasks={workingTasks}
             />
           );
         })}

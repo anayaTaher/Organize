@@ -186,7 +186,7 @@ function TasksImp() {
             />
           );
         })}
-        <Grid
+        {owner && <Grid
           container
           flexDirection="column"
           alignItems="center"
@@ -202,7 +202,7 @@ function TasksImp() {
           >
             <AddIcon />
           </IconButton>
-        </Grid>
+        </Grid>}
       </Box>
     </>
   );
