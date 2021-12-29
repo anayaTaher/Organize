@@ -10,6 +10,7 @@ import {
   Divider,
   Grid,
   Tooltip,
+  Link
 } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import ProfileIcon from "@mui/icons-material/Person";
@@ -18,14 +19,24 @@ import { deleteContributor } from "../reducers/actions/contributors";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import PeopleAltIcon from "@mui/icons-material/PeopleAltOutlined";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
+import {useHistory} from "react-router-dom"
 
 const MAX_TEAMS = 2;
 
-function ProjectContributor({ firstName, lastName, id, teams = [], owner }) {
+function ProjectContributor({
+  firstName,
+  lastName,
+  id,
+  teams = [],
+  owner,
+  tasks = [],
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const params = useParams();
+  const history =useHistory();
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -145,6 +156,28 @@ function ProjectContributor({ firstName, lastName, id, teams = [], owner }) {
             </MenuItem>
           </Menu>
         </Grid>
+        {tasks.map((task) => {
+          return (
+            <>
+              <Grid item container alignItems="center" justifyContent="center" xs={1}>
+                <WorkOutlineOutlinedIcon />
+              </Grid>
+              <Grid item xs={11}>
+                <Link 
+                underline="none"
+                sx={{
+                  color: 'black',
+                  ":hover": {
+                    cursor: 'pointer',
+                    color: 'lightseagreen'
+                  }
+                }} onClick={() => {history.push(`/projects/${params.id}/task/${task._id}`)}} >
+                <Typography>{task.name}</Typography>
+                </Link>
+              </Grid>
+            </>
+          );
+        })}
       </Grid>
     </>
   );
