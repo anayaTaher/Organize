@@ -56,6 +56,12 @@ function Task() {
       case "notStarted":
         color = "gray";
         break;
+      case "onHoldBehind":
+        color = "red";
+        break;
+      case "pending":
+        color = "purple"
+        break;
       default:
         break;
     }
@@ -77,6 +83,12 @@ function Task() {
       case "notStarted":
         text = "Task has not been worked on yet";
         break;
+      case "onHoldBehind":
+        text =
+          "Prerequisit task is not complete, task is behind the  schedule!";
+        break;
+      case "pending":
+        text = "Task is awaiting approval";
       default:
         break;
     }
@@ -109,8 +121,14 @@ function Task() {
       if (foundTask && !foundTask.done) state = "onHold";
     });
     if (deadlineDate.getTime() < actuallyToday.getTime()) {
-      state = "behind";
+      if (state === "onHold") state = "onHoldBehind";
+      else state = "behind";
     }
+    let isAllDone = true;
+    task.subtasks.forEach((subtask) => {
+      if (!subtask.done) isAllDone = false;
+    });
+    if (isAllDone) state = "pending";
     if (task.done) {
       state = "done";
       progress = 100;
@@ -327,13 +345,21 @@ function Task() {
                           sx={{ "&.Mui-checked": { color: "dodgerblue" } }}
                           onChange={handleSubtaskInProgressChange(subtask)}
                           checked={subtask.inProgress}
-                          disabled={isOwner}
+                          disabled={
+                            currentTask.done ||
+                            getTaskState(currentTask) == "onHold" ||
+                            getTaskState(currentTask) == "onHoldBehind"
+                          }
                         />
                         <Checkbox
                           sx={{ "&.Mui-checked": { color: "green" } }}
                           onChange={handleSubtaskDoneChange(subtask)}
                           checked={subtask.done}
-                          disabled={isOwner}
+                          disabled={
+                            currentTask.done ||
+                            getTaskState(currentTask) == "onHold" ||
+                            getTaskState(currentTask) == "onHoldBehind"
+                          }
                         />
                       </Grid>
                       <Grid item container alignItems="center" xs={6}>

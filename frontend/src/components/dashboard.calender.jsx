@@ -64,7 +64,6 @@ function Calender({ today }) {
       today.getMonth(),
       today.getDate()
     );
-
     let progress = 0;
     let isAnyInProgress = false;
     task.subtasks.forEach((subtask) => {
@@ -82,8 +81,14 @@ function Calender({ today }) {
       if (foundTask && !foundTask.done) state = "onHold";
     });
     if (deadlineDate.getTime() < actuallyToday.getTime()) {
-      state = "behind";
+      if (state === "onHold") state = "onHoldBehind";
+      else state = "behind";
     }
+    let isAllDone = true;
+    task.subtasks.forEach((subtask) => {
+      if (!subtask.done) isAllDone = false;
+    });
+    if (isAllDone) state = "pending";
     if (task.done) {
       state = "done";
       progress = 100;

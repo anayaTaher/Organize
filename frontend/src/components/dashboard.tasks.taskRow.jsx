@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { removeTask } from "../reducers/actions/tasks";
 import { useParams, useHistory } from "react-router-dom";
 import TeamIcon from "@mui/icons-material/PeopleAltOutlined";
+import PendingActionsOutlinedIcon from '@mui/icons-material/PendingActionsOutlined';
 
 const TEAMS_TO_SHOW = 3;
 
@@ -79,6 +80,14 @@ function TaskRow(props) {
     case "notStarted":
       taskIcon = <MoreHorizIcon sx={{ color: "gray" }} />;
       taskTooltipTitle = "Task has not been worked on yet";
+    case "onHoldBehind":
+      taskIcon = <CloseIcon sx={{ color: "red" }} />;
+      taskTooltipTitle =
+        "Prerequisit task is not complete, task is behind the  schedule!";
+      break;
+    case "pending":
+      taskIcon = <PendingActionsOutlinedIcon sx={{ color: "purple" }} />;
+      taskTooltipTitle = "Task is awaiting approval";
       break;
     default:
       break;
@@ -102,8 +111,12 @@ function TaskRow(props) {
       );
   }
 
-  if(taskTeam.length === 0){
-    taskTeam = [<Typography variant="body2" sx={{color: "#708090", opacity: '60%'}}>No teams assigned</Typography>]
+  if (taskTeam.length === 0) {
+    taskTeam = [
+      <Typography variant="body2" sx={{ color: "#708090", opacity: "60%" }}>
+        No teams assigned
+      </Typography>,
+    ];
   }
 
   return (
@@ -251,12 +264,7 @@ function TaskRow(props) {
           display: { xs: "flex", md: "none" },
         }}
       >
-        <Grid
-          item
-          container
-          alignItems="center"
-          xs={11}
-        >
+        <Grid item container alignItems="center" xs={11}>
           <Grid
             item
             container
@@ -285,21 +293,53 @@ function TaskRow(props) {
               <Typography variant="body1">{props.taskName}</Typography>
             </Link>
           </Grid>
-          <Grid item container alignItems="center" justifyContent={"center"} xs={2} marginTop={2}>
+          <Grid
+            item
+            container
+            alignItems="center"
+            justifyContent={"center"}
+            xs={2}
+            marginTop={2}
+          >
             <TeamIcon />
           </Grid>
-          <Grid item container alignItems="center" xs={10} sx={{ "& > *": { mr: 1 } }} marginTop={2}>
+          <Grid
+            item
+            container
+            alignItems="center"
+            xs={10}
+            sx={{ "& > *": { mr: 1 } }}
+            marginTop={2}
+          >
             {taskTeam}
           </Grid>
-          <Grid item container alignItems="center" justifyContent="center" xs={2} marginTop={2}>
+          <Grid
+            item
+            container
+            alignItems="center"
+            justifyContent="center"
+            xs={2}
+            marginTop={2}
+          >
             <Typography sx={{ color: "#708090" }} variant="body1">
               {props.taskWeight}
             </Typography>
           </Grid>
-          <Grid item container alignItems="center" xs={6}marginTop={2}>
-            <LinearProgress variant="determinate" value={props.taskProgress} sx={{width: '100%'}}/>
+          <Grid item container alignItems="center" xs={6} marginTop={2}>
+            <LinearProgress
+              variant="determinate"
+              value={props.taskProgress}
+              sx={{ width: "100%" }}
+            />
           </Grid>
-          <Grid item container alignItems="center" justifyContent="center" xs={4} marginTop={2}>
+          <Grid
+            item
+            container
+            alignItems="center"
+            justifyContent="center"
+            xs={4}
+            marginTop={2}
+          >
             <Typography variant="body1" sx={{ color: "#708090" }}>
               {`${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`}
             </Typography>

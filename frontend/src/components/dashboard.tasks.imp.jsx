@@ -19,7 +19,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks } from "../reducers/actions/tasks";
 import { fetchTeams } from "../reducers/actions/teams";
-import {isProjectOwner} from "../reducers/actions/projects";
+import { isProjectOwner } from "../reducers/actions/projects";
 
 function TasksImp() {
   const history = useHistory();
@@ -29,7 +29,7 @@ function TasksImp() {
   const teams = useSelector((state) => state.teams);
   const [sortBy, setSortBy] = React.useState("");
   const [searchValue, setSearchValue] = React.useState("");
-  const owner = useSelector(state => state.owner);
+  const owner = useSelector((state) => state.owner);
   const handleSortByChange = (event) => {
     setSortBy(event.target.value);
   };
@@ -52,7 +52,7 @@ function TasksImp() {
   React.useEffect(() => {
     dispatch(fetchTasks({ projectId: params.id }));
     dispatch(fetchTeams({ projectId: params.id }));
-    dispatch(isProjectOwner({projectId: params.id}));
+    dispatch(isProjectOwner({ projectId: params.id }));
   }, [dispatch]);
 
   React.useEffect(() => {}, [tasks, teams]);
@@ -101,7 +101,12 @@ function TasksImp() {
             </Select>
           </FormControl>
         </Box>
-        <Grid container padding={1} paddingTop={2} sx={{display: {xs: "none", md: "flex"}}}>
+        <Grid
+          container
+          padding={1}
+          paddingTop={2}
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
           <Grid item container justifyContent="center" xs={0.5}>
             <Typography variant="h6">State</Typography>
           </Grid>
@@ -122,7 +127,12 @@ function TasksImp() {
           </Grid>
           <Grid item xs={1} />
         </Grid>
-        <Grid container padding={1} paddingTop={2} sx={{display: {xs: "flex", md: "none"}}}>
+        <Grid
+          container
+          padding={1}
+          paddingTop={2}
+          sx={{ display: { xs: "flex", md: "none" } }}
+        >
           <Grid item container justifyContent="center" xs={12}>
             <Typography variant="h6">Displaying Task Details</Typography>
           </Grid>
@@ -148,7 +158,6 @@ function TasksImp() {
             today.getMonth(),
             today.getDate()
           );
-
           let progress = 0;
           let isAnyInProgress = false;
           task.subtasks.forEach((subtask) => {
@@ -166,8 +175,14 @@ function TasksImp() {
             if (foundTask && !foundTask.done) state = "onHold";
           });
           if (deadlineDate.getTime() < actuallyToday.getTime()) {
-            state = "behind";
+            if (state === "onHold") state = "onHoldBehind";
+            else state = "behind";
           }
+          let isAllDone = true;
+          task.subtasks.forEach((subtask) => {
+            if (!subtask.done) isAllDone = false;
+          });
+          if (isAllDone) state = "pending";
           if (task.done) {
             state = "done";
             progress = 100;
@@ -186,23 +201,25 @@ function TasksImp() {
             />
           );
         })}
-        {owner && <Grid
-          container
-          flexDirection="column"
-          alignItems="center"
-          xs={12}
-          sx={{ mt: 10 }}
-        >
-          <Typography variant="h6" sx={{ color: "#708090" }}>
-            Create a new task
-          </Typography>
-          <IconButton
-            sx={{ border: 1, mt: 2, color: "#708090" }}
-            onClick={() => history.push(`/projects/${params.id}/newTask`)}
+        {owner && (
+          <Grid
+            container
+            flexDirection="column"
+            alignItems="center"
+            xs={12}
+            sx={{ mt: 10 }}
           >
-            <AddIcon />
-          </IconButton>
-        </Grid>}
+            <Typography variant="h6" sx={{ color: "#708090" }}>
+              Create a new task
+            </Typography>
+            <IconButton
+              sx={{ border: 1, mt: 2, color: "#708090" }}
+              onClick={() => history.push(`/projects/${params.id}/newTask`)}
+            >
+              <AddIcon />
+            </IconButton>
+          </Grid>
+        )}
       </Box>
     </>
   );

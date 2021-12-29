@@ -57,6 +57,12 @@ function CalenderDay({
       case "notStarted":
         color = "lightgray"
         break;
+      case "onHoldBehind": 
+        color = "red";
+        break;
+      case "pending":
+        color = "purple";
+        break;
       default:
         break;
     }
