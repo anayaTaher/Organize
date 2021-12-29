@@ -2,7 +2,6 @@ import {
   Button,
   Divider,
   FormControl,
-  Input,
   InputLabel,
   MenuItem,
   Modal,
@@ -10,6 +9,7 @@ import {
   Select,
   Typography,
   TextField,
+  Grid,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
@@ -18,10 +18,13 @@ import TeamIcon from "@mui/icons-material/Person";
 import ProjectContributor from "./dashboard.contributor.projectContributor";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchTeams } from "../reducers/actions/teams";
+import { isProjectOwner } from "../reducers/actions/projects";
 import {
   addContributor,
   fetchContributors,
 } from "../reducers/actions/contributors";
+import PeopleIcon from "@mui/icons-material/PeopleAlt";
 
 const modalBoxStyle = {
   height: 200,
@@ -76,8 +79,27 @@ function ContributorsImp() {
   const contributors = useSelector((state) => state.contributors);
   const dispatch = useDispatch();
   const params = useParams();
-  const [team, setTeam] = React.useState("");
+  const [team, setTeam] = React.useState("ALL");
   const [searchValue, setSearchValue] = React.useState("");
+  const teams = useSelector((state) => state.teams);
+  const owner = useSelector((state) => state.owner);
+
+  const contributorsDisplayed = React.useMemo(() => {
+    console.log(team);
+    let conts = contributors.filter((contributor) => {
+      const name = contributor.firstName + contributor.lastName;
+      if (name.toLowerCase().includes(searchValue.toLowerCase())) {
+        return contributor;
+      }
+    });
+    if (team === "ALL") return conts;
+    conts = conts.filter((contributor) => {
+      if (contributor.teams && contributor.teams.includes(team))
+        return contributor;
+    });
+    return conts;
+  }, [contributors, searchValue, team]);
+
   const handleSelectTeamChange = (event) => {
     setTeam(event.target.value);
   };
@@ -96,6 +118,8 @@ function ContributorsImp() {
 
   React.useEffect(() => {
     dispatch(fetchContributors({ projectId: params.id }));
+    dispatch(fetchTeams({ projectId: params.id }));
+    dispatch(isProjectOwner({ projectId: params.id }));
   }, [dispatch]);
 
   return (
@@ -107,75 +131,102 @@ function ContributorsImp() {
           width: "100%",
           borderBottom: 1,
           borderColor: "lightgray",
+          justifyContent: "center",
         }}
       >
-        <Typography variant="h5" sx={{ mt: 2, ml: 2 }}>
-          Project Contributors
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            p: 1,
-          }}
-        >
-          <Typography variant="body1" sx={{ flexGrow: 1, ml: 5 }}>
-            40 Contributors
+        <Box sx={{ display: "flex", alignItems: "center", mt: 1 }}>
+          <PeopleIcon fontSize="medium" sx={{ ml: 2 }} />
+          <Typography variant="h5" sx={{ ml: 1 }}>
+            Project Contributors
           </Typography>
-          <Button variant="contained" sx={{ mr: 5 }} onClick={handleModalOpen}>
-            New Member
-          </Button>
-          <BoxModal modalOpen={modalOpen} handleModalClose={handleModalClose} />
-          <FormControl sx={{ width: 150, mr: 5 }}>
-            <InputLabel id="team-select">Select Team</InputLabel>
-            <Select
-              onChange={handleSelectTeamChange}
-              value={team}
-              label="Select Team"
-              labelId="team-select"
-              startAdornment={<TeamIcon />}
+        </Box>
+        <Divider sx={{ my: 1 }} />
+        <Grid container alignItems="center" padding={1}>
+          <Grid item xs={4}>
+            <Typography
+              variant="body1"
+              sx={{ flexGrow: 1, ml: 5, display: { xs: "block", md: "none" } }}
             >
-              <MenuItem value="Backend Team">Backend Team</MenuItem>
-              <MenuItem value="Design Team">Design Team</MenuItem>
-              <MenuItem value="Frontend Team">Frontend Team</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ mr: 5 }}>
-            <InputLabel htmlFor="search-teams">Search Members</InputLabel>
-            <OutlinedInput
-              id="search-teams"
-              label="Search Members"
-              value={searchValue}
-              onChange={handleSearchValueChange}
-              startAdornment={<SearchIcon color="inherit" />}
-            />
-          </FormControl>
-        </Box>
+              {contributors?.length} Contributor
+              {contributors?.length === 1 ? "" : "s"}
+            </Typography>
+          </Grid>
+          <Grid item container flexDirection="row-reverse" xs={8}>
+            <Button
+              variant="contained"
+              sx={{ mr: 5 }}
+              onClick={handleModalOpen}
+            >
+              New Member
+            </Button>
+          </Grid>
+          <Grid
+            item
+            container
+            alignItems="center"
+            xs={0}
+            sm={4}
+            md={6}
+            xl={8}
+            padding={2}
+            marginTop={2}
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            <Typography
+              variant="body1"
+              sx={{ flexGrow: 1, ml: 5, display: { xs: "none", md: "block" } }}
+            >
+              {contributors?.length} Contributor
+              {contributors?.length === 1 ? "" : "s"}
+            </Typography>
+          </Grid>
+          <Grid item xs={6} sm={4} md={3} xl={2} padding={2} marginTop={2}>
+            <FormControl fullWidth>
+              <InputLabel id="team-select">Select Team</InputLabel>
+              <Select
+                onChange={handleSelectTeamChange}
+                value={team}
+                label="Select Team"
+                labelId="team-select"
+                startAdornment={<TeamIcon />}
+                defaultValue="ALL"
+                defaultChecked={1}
+              >
+                <MenuItem value="ALL">- Display All -</MenuItem>
+                {teams.length > 0 &&
+                  teams.map((t) => {
+                    return <MenuItem value={t.name}>{t.name}</MenuItem>;
+                  })}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6} sm={4} md={3} xl={2} padding={2} marginTop={2}>
+            <FormControl fullWidth>
+              <InputLabel htmlFor="search-teams">Search Members</InputLabel>
+              <OutlinedInput
+                id="search-teams"
+                label="Search Members"
+                value={searchValue}
+                onChange={handleSearchValueChange}
+                startAdornment={<SearchIcon color="inherit" />}
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+        <BoxModal modalOpen={modalOpen} handleModalClose={handleModalClose} />
         <Divider sx={{ m: 2 }} />
-        <Box
-          sx={{
-            width: "100%",
-            p: 2,
-            px: 5,
-            display: "flex",
-            alignItems: "center",
-            "& > *": {
-              ml: 2,
-            },
-            "& > .MuiChip-root": {
-              ml: 1,
-            },
-            "&:hover": {
-              backgroundColor: "#eee",
-            },
-          }}
-        >
-          <Typography variant="h6" sx={{ ml: 2, width: "54%" }}>
-            Team Member
-          </Typography>
-        </Box>
-        {contributors.map((contributor) => {
+        <Grid container padding={2}>
+          <Grid item xs={6} sx={{ display: { xs: "none", md: "block" } }}>
+            <Typography variant="h6">Team Member</Typography>
+          </Grid>
+          <Grid item xs={6} sx={{ display: { xs: "none", md: "block" } }}>
+            <Typography variant="h6">Assigned Teams</Typography>
+          </Grid>
+          <Grid item xs={12} sx={{ display: { xs: "block", md: "none" } }}>
+            <Typography variant="h6">Displaying Contributor Details</Typography>
+          </Grid>
+        </Grid>
+        {contributorsDisplayed.map((contributor) => {
           return (
             <ProjectContributor
               key={contributor._id}
@@ -183,6 +234,7 @@ function ContributorsImp() {
               firstName={contributor.firstName}
               lastName={contributor.lastName}
               teams={contributor.teams}
+              owner={owner}
             />
           );
         })}

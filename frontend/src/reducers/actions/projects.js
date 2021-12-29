@@ -1,7 +1,7 @@
 import axios from "axios"
 import jwt from "jsonwebtoken"
 
-const server = "http://192.168.1.242:4000"
+const server = "http://localhost:4000"
 
 export const createProject = (data) => async (dispatch) => {
   try {
@@ -53,6 +53,16 @@ export const getProjectDetails = (data) => async (dispatch) => {
   try{
     const res = await axios.post(server + "/getProjectDetails", data);
     dispatch({type: "FETCH_PROJECT_DETAILS", payload: res.data})
+  }
+  catch(err){
+    console.log(err);
+  }
+}
+
+export const getProjectOwner = (data) => async (dispatch) => {
+  try{
+    const res = await axios.post(server + "/getProjectOwner", data);
+    dispatch({type: "GET_PROJECT_OWNER", payload: res.data})
   }
   catch(err){
     console.log(err);

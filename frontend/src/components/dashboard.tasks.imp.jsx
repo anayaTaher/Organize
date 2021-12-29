@@ -101,7 +101,7 @@ function TasksImp() {
             </Select>
           </FormControl>
         </Box>
-        <Grid container padding={1} paddingTop={2}>
+        <Grid container padding={1} paddingTop={2} sx={{display: {xs: "none", md: "flex"}}}>
           <Grid item container justifyContent="center" xs={0.5}>
             <Typography variant="h6">State</Typography>
           </Grid>
@@ -121,6 +121,11 @@ function TasksImp() {
             <Typography variant="h6">Deadline</Typography>
           </Grid>
           <Grid item xs={1} />
+        </Grid>
+        <Grid container padding={1} paddingTop={2} sx={{display: {xs: "flex", md: "none"}}}>
+          <Grid item container justifyContent="center" xs={12}>
+            <Typography variant="h6">Displaying Task Details</Typography>
+          </Grid>
         </Grid>
         {/* {DisplayedTasks.map((item) => {
           return (

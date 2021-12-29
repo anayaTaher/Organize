@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userCopy = require("./users.model");
+const UserModel = require("./users.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ProjectModel = require("./projects.model");
@@ -59,5 +59,22 @@ router.post("/getProjectDetails", async (req, res) => {
     console.log(err);
   }
 });
+
+router.post("/getProjectOwner", async (req, res) => {
+  try{
+    const projectId = req.body.projectId;
+    const project = await ProjectModel.findOne({ _id: projectId });
+    const user = await UserModel.template.findOne({_id: project.owner});
+    const userToSend = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      image: user.image
+    }
+    res.status(201).json(userToSend);
+  }
+  catch(err){
+    console.log(err);
+  }
+})
 
 module.exports = router;

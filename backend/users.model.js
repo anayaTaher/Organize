@@ -16,6 +16,9 @@ const userTemplate = new mongoose.Schema({
 		type: Date, default: Date.now
 	}, isOnline: {
 		type: Boolean, default: true
+	},
+	image: {
+		type: String, default: ""
 	}
 })
 

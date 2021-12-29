@@ -176,10 +176,13 @@ function NewTaskImp() {
         subtaskName: subtaskData.subtaskName,
         subtaskWeight: subtaskData.subtaskWeight,
       };
-      setSubtaskData({ ...subtaskData, id: subtaskData.id + 1 }); // local id for now
+      setSubtaskData({
+        subtaskName: "",
+        subtaskWeight: 0,
+        id: subtaskData.id + 1,
+      }); // local id for now
       setSubtasks([...subtasks, newSubTask]);
     }
-    clearSubtaskFields();
   };
 
   const removeSubtask = (id) => () => {
@@ -434,8 +437,11 @@ function NewTaskImp() {
               {subtasks.map((subtask) => {
                 return (
                   <>
-                    <Grid item xs={6}>
-                      <Typography variant="body1">
+                    <Grid item xs={6} textOverflow={"clip"}>
+                      <Typography
+                        variant="body1"
+                        sx={{ overflowWrap: "break-word" }}
+                      >
                         {subtask.subtaskName}
                       </Typography>
                     </Grid>

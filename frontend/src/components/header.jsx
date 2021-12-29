@@ -12,6 +12,7 @@ import {
   Menu,
   MenuItem,
   Tooltip,
+  Typography
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -22,7 +23,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import ChatIcon from "@mui/icons-material/Chat";
 import ProjectsIcon from "@mui/icons-material/Task";
 import ContactUsIcon from "@mui/icons-material/Phone";
-import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { auth, db } from "../firebase";
@@ -30,6 +30,10 @@ import { AuthContext } from "./auth";
 import { useHistory } from "react-router-dom";
 import { teal } from "@mui/material/colors";
 import PersonalVideoIcon from "@mui/icons-material/PersonalVideo";
+import LogoWhite from "../assets/logo/logowhite.png";
+import { Box } from "@mui/system";
+import { getAccountData } from "../reducers/actions/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const HeaderTheme = createTheme({
   palette: {
@@ -39,7 +43,7 @@ const HeaderTheme = createTheme({
   },
 });
 
-function Header({ flag = true }) {
+function Header({ flag = true, navbarMobile }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const HandleMobileClose = () => setMobileOpen(!mobileOpen);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -53,9 +57,16 @@ function Header({ flag = true }) {
       .doc(auth.currentUser.uid)
       .update({ isOnline: false });
     await auth.signOut();
+    localStorage.removeItem("token");
     history.push("/chat-room");
   };
   const { user } = useContext(AuthContext);
+  const currentUser = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getAccountData());
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={HeaderTheme}>
@@ -118,7 +129,7 @@ function Header({ flag = true }) {
             {user && flag && (
               <Link
                 onClick={() =>
-                  (window.location.href = "http://192.168.1.242:4000/")
+                  (window.location.href = "http://localhost:4000/")
                 }
                 href="#"
                 underline="none"
@@ -129,23 +140,41 @@ function Header({ flag = true }) {
               </Link>
             )}
           </ToolBar>
-          <ToolBar sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton sx={{ mr: 2 }} onClick={HandleMobileClose}>
-              <MenuIcon />
-            </IconButton>
-            <Avatar
-              src={Logo}
-              alt="/o/"
-              sx={{ mr: 5, height: 50, width: 50 }}
-            />
-          </ToolBar>
+          {flag ? (
+            <>
+              <ToolBar
+                sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+              >
+                <IconButton sx={{ mr: 2 }} onClick={HandleMobileClose}>
+                  <MenuIcon />
+                </IconButton>
+              </ToolBar>
+            </>
+          ) : (
+            <>
+              <Box sx={{ display: { xs: "flex", md: "none" }, flexGrow: 1 }}>
+                <IconButton
+                  sx={{ mr: 2, color: "white" }}
+                  onClick={navbarMobile}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Avatar alt="Organize" src={LogoWhite} />
+              </Box>
+            </>
+          )}
+          { user && 
           <ToolBar sx={{ justifyContent: "flex-end" }}>
             <Tooltip title="Account settings">
               <IconButton onClick={handleClick}>
-                <Avatar src={Logo} alt="/o/" />
+                <Avatar src={currentUser?.image} alt="/o/" />
               </IconButton>
             </Tooltip>
+            <Box sx={{display: {xs:'none', md: 'block'}}}>
+              <Typography variant="body2" sx={{color: flag ? 'black' : 'white', ml: 1}}>{`${currentUser?.firstName} ${currentUser?.lastName}`}</Typography>
+            </Box>
           </ToolBar>
+          }
         </ToolBar>
       </AppBar>
       <Drawer
@@ -214,7 +243,7 @@ function Header({ flag = true }) {
                 color="#000000"
                 underline="none"
                 onClick={() =>
-                  (window.location.href = "http://192.168.1.242:4000/")
+                  (window.location.href = "http://localhost:4000/")
                 }
               >
                 <ListItem>
@@ -265,18 +294,9 @@ function Header({ flag = true }) {
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
           <MenuItem>
-            <Avatar /> Profile
-          </MenuItem>
-          <MenuItem>
-            <Avatar /> My Account
+            <Avatar src={currentUser?.image}/> Profile
           </MenuItem>
           <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <PersonAdd fontSize="small" />
-            </ListItemIcon>
-            Add Another Account
-          </MenuItem>
           <MenuItem>
             <ListItemIcon>
               <Settings fontSize="small" />

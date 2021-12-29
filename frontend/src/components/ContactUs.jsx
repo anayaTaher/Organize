@@ -21,7 +21,7 @@ export default function ContactUs() {
 	const {register, handleSubmit, formState: {errors}} = useForm()
 	
 	const onSubmit = data => {
-		axios.post(`http://192.168.1.242:4000/contact-us`, {
+		axios.post(`http://localhost:4000/contact-us`, {
 			email: auth.currentUser.email, message
 		}).then(res => {
 			setSuccess(true)

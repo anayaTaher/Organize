@@ -84,7 +84,7 @@ window.addEventListener('load', () => {
 			localStorage.setItem('username', name)
 			
 			//reload room
-			location.href = "http://192.168.1.242:4000/?room=" + roomToken
+			location.href = "http://localhost:4000/?room=" + roomToken
 		} else {
 			document.querySelector('#err-msg-username').innerText = "Please input Room Token"
 		}

@@ -13,33 +13,41 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchContributors } from "../reducers/actions/contributors";
 import { useParams } from "react-router-dom";
-import { addTeam } from "../reducers/actions/teams";
+import { editTeam } from "../reducers/actions/teams";
 import Header from "./header";
+import { fetchTeam } from "../reducers/actions/team";
+import { useHistory } from "react-router-dom";
 
-function NewTeamDetails({ checkList }) {
-  const [teamName, setTeamName] = React.useState("");
+function EditTeamDetails({ checkList, team }) {
+  const [teamName, setTeamName] = React.useState(team.name);
   const params = useParams();
   const [successMessage, setSuccessMessage] = React.useState("");
+  const history = useHistory();
 
   const handleTeamNameChange = (event) => {
     setTeamName(event.target.value);
   };
 
-  const addTeamWithMembers = async () => {
+  React.useEffect(() => {
+    setTeamName(team.name);
+  }, [team]);
+
+  const editTeamWithMembers = async () => {
     const keys = Object.keys(checkList);
     let members = [];
     keys.forEach((key) => {
       if (checkList[key]) members.push(key);
     });
     const data = {
-      projectId: params.id,
-      teamName,
+      teamId: params.tid,
+      name: teamName,
       members,
     };
-    const value = await addTeam(data);
+    const value = await editTeam(data);
     if (value == 200) {
-      setSuccessMessage(`Team ${teamName} was added successfully`);
+      setSuccessMessage(`Team ${teamName} was edited successfully`);
     }
+    history.push(`/projects/${params.id}/teams`);
   };
   return (
     <Grid container padding={5} columnGap={2}>
@@ -61,8 +69,8 @@ function NewTeamDetails({ checkList }) {
         />
       </Grid>
       <Grid item container xs={2}>
-        <Button variant="contained" fullWidth onClick={addTeamWithMembers}>
-          Add
+        <Button variant="contained" fullWidth onClick={editTeamWithMembers}>
+          Edit
         </Button>
       </Grid>
       <Grid item xs={2} />
@@ -75,22 +83,25 @@ function NewTeamDetails({ checkList }) {
   );
 }
 
-function NewTeam() {
+function EditTeam() {
   const contributors = useSelector((state) => state.contributors);
   const dispatch = useDispatch();
   const params = useParams();
+  const team = useSelector((state) => state.team);
   const [checkList, setCheckList] = React.useState({});
   React.useEffect(() => {
     dispatch(fetchContributors({ projectId: params.id }));
+    dispatch(fetchTeam({ teamId: params.tid }));
   }, [dispatch]);
 
   React.useEffect(() => {
     let list = {};
+    if (!team.members) return;
     contributors.forEach((cont) => {
-      list[cont._id] = false;
+      list[cont._id] = team.members.includes(cont._id);
     });
     setCheckList(list);
-  }, [contributors]);
+  }, [contributors, team]);
 
   const handleCheckChange = (id) => (event) => {
     setCheckList({ ...checkList, [id]: event.target.checked });
@@ -100,7 +111,7 @@ function NewTeam() {
   const HandleMobileClose = () => setMobileOpen(!mobileOpen);
   return (
     <>
-      <Header flag={false} navbarMobile={setMobileOpen}/>
+      <Header flag={false} navbarMobile={setMobileOpen} />
       <Box component="div" sx={{ display: "flex" }}>
         <Navbar mobileOpen={mobileOpen} HandleMobileClose={HandleMobileClose} />
         <Box
@@ -122,10 +133,13 @@ function NewTeam() {
           >
             <GroupAddIcon fontSize="large" />
             <Typography variant="h5" sx={{ flexGrow: 1 }}>
-              New Team
+              Edit Team
             </Typography>
           </Box>
-          <NewTeamDetails checkList={checkList} />
+          {Object.keys(team).length > 0 && (
+            <EditTeamDetails checkList={checkList} team={team} />
+          )}
+
           <Typography variant="h5" sx={{ ml: 3 }}>
             Available Users
           </Typography>
@@ -139,14 +153,20 @@ function NewTeam() {
           </Grid>
           {contributors.map((contributor) => {
             return (
-              <Grid container paddingX={5} marginY={1} key={contributor._id}>
+              <Grid
+                key={contributor._id}
+                container
+                paddingX={5}
+                marginY={1}
+                key={contributor._id}
+              >
                 <Grid item container alignItems="center" xs={10}>
                   <Avatar sx={{ mr: 2 }} />
                   <Typography variant="body1">{`${contributor.firstName} ${contributor.lastName}`}</Typography>
                 </Grid>
                 <Grid item xs={2}>
                   <Checkbox
-                    checked={checkList[contributor._id]}
+                    checked={checkList[contributor._id] ? true : false}
                     onChange={handleCheckChange(contributor._id)}
                   />
                 </Grid>
@@ -159,4 +179,4 @@ function NewTeam() {
   );
 }
 
-export default NewTeam;
+export default EditTeam;

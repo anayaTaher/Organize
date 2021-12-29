@@ -48110,7 +48110,7 @@ diff --git a/backend/meeting/assets/js/events.js b/backend/meeting/assets/js/eve
  			
  			//reload room
 -			location.href = "http://localhost:4000/?room=" + roomToken
-+			location.href = "http://192.168.1.242:4000/?room=" + roomToken
++			location.href = "http://localhost:4000/?room=" + roomToken
  		} else {
  			document.querySelector('#err-msg-username').innerText = "Please input Room Token"
  		}
@@ -48129,7 +48129,7 @@ diff --git a/backend/signup.route.js b/backend/signup.route.js
  		const payload = {email: user.email, id: user._id}
  		const token = jwt.sign(payload, secret, {expiresIn: "15m"})
 -		const link = `http://localhost:3000/reset-password/${user._id}/${token}`
-+		const link = `http://192.168.1.242:3000/reset-password/${user._id}/${token}`
++		const link = `http://localhost:3000/reset-password/${user._id}/${token}`
  		confirmLinkModel.createNewLink(user._id, token)
  		
  		let transporter = nodemailer.createTransport({
@@ -48148,7 +48148,7 @@ rename to backend/meeting/meeting.html
      <div class="text-white">
          <img
 -                onclick="window.location.href = 'http://localhost:3000/'"
-+                onclick="window.location.href = 'http://192.168.1.242:3000/'"
++                onclick="window.location.href = 'http://localhost:3000/'"
                  src="./assets/logowhite.png"
                  alt="/o/"
                  style="margin-right: 5px; height: 35px; width: 35px;cursor: pointer"

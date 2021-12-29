@@ -23,7 +23,7 @@ export default function ResetPassword() {
 	const [password, setPassword] = useState("")
 	const [confirmPassword, setConfirmPassword] = useState("")
 	const {register, handleSubmit, formState: {errors}} = useForm()
-	axios.post(`http://192.168.1.242:4000/reset-password/${parameters.id}/${parameters.token}`, {
+	axios.post(`http://localhost:4000/reset-password/${parameters.id}/${parameters.token}`, {
 		...parameters, flag: 0
 	}).then(res => {
 		if (!res.data) {
@@ -33,7 +33,7 @@ export default function ResetPassword() {
 	
 	const onSubmit = (data) => {
 		if (password === confirmPassword) {
-			axios.post(`http://192.168.1.242:4000/reset-password/${parameters.id}/${parameters.token}`, {
+			axios.post(`http://localhost:4000/reset-password/${parameters.id}/${parameters.token}`, {
 				...data, flag: 1
 			}).then(res => {
 				if (Boolean(res.data)) {

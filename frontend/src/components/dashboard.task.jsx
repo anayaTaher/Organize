@@ -10,6 +10,7 @@ import {
   Checkbox,
   Avatar,
   Button,
+  Link,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -22,6 +23,7 @@ import {
 import { fetchTeams } from "../reducers/actions/teams";
 import { fetchContributors } from "../reducers/actions/contributors";
 import { isProjectOwner } from "../reducers/actions/projects";
+import { useHistory } from "react-router-dom";
 
 function Task() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -33,6 +35,7 @@ function Task() {
   const params = useParams();
   const teams = useSelector((state) => state.teams);
   const isOwner = useSelector((state) => state.owner);
+  const history = useHistory();
 
   React.useEffect(() => {
     console.log(contributors);
@@ -167,9 +170,14 @@ function Task() {
     );
   };
 
+  const getTaskName = (id) => {
+    const task = tasks.find((task) => task._id === id);
+    if (task.name) return task.name;
+  };
+
   return (
     <>
-      <Header flag={false} />
+      <Header flag={false} navbarMobile={setMobileOpen} />
       <Box component="div" sx={{ display: "flex" }}>
         <Navbar mobileOpen={mobileOpen} HandleMobileClose={HandleMobileClose} />
         <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
@@ -213,7 +221,7 @@ function Task() {
                 </Grid>
                 <Grid item xs={12} md={10}>
                   <Box sx={{ display: "flex", "& > *": { mr: 2 } }}>
-                    {teams.length > 0 ? (
+                    {currentTask.teams.length > 0 ? (
                       currentTask.teams.map((teamId) => (
                         <Chip
                           variant="outlined"
@@ -221,11 +229,16 @@ function Task() {
                         />
                       ))
                     ) : (
-                      <></>
+                      <Typography
+                        variant="body1"
+                        sx={{ color: "#708090", opacity: "50%" }}
+                      >
+                        No Teams Assigned
+                      </Typography>
                     )}
                   </Box>
                 </Grid>
-                <Grid item xs={10} md={2}>
+                <Grid item xs={12} md={2}>
                   <Typography variant="h6">State: </Typography>
                 </Grid>
                 <Grid item xs={12} md={10}>
@@ -236,7 +249,45 @@ function Task() {
                     {getStateText(getTaskState(currentTask))}
                   </Typography>
                 </Grid>
-                <Grid item xs={10} md={2}>
+                <Grid item xs={12} md={2}>
+                  <Typography variant="h6">Dependency List: </Typography>
+                </Grid>
+                <Grid item xs={12} md={12} paddingX={3}>
+                  {currentTask?.dependsOn.length > 0 ? (
+                    currentTask?.dependsOn.map((task) => {
+                      return (
+                        <Link
+                          underline="none"
+                          sx={{
+                            color: "black",
+                            ":hover": {
+                              cursor: "pointer",
+                              color: "lightseagreen",
+                            },
+                          }}
+                          onClick={() => {
+                            history.push(`/projects/${params.id}/task/${task}`);
+                          }}
+                        >
+                          <Box sx={{ display: "flex", mt: 1 }}>
+                            <TaskIcon sx={{ mr: 1 }} />
+                            <Typography variant="body1">
+                              {getTaskName(task)}
+                            </Typography>
+                          </Box>
+                        </Link>
+                      );
+                    })
+                  ) : (
+                    <Typography
+                      variant="body1"
+                      sx={{ color: "#708090", opacity: "50%" }}
+                    >
+                      No Dependency Found
+                    </Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12} md={2}>
                   <Typography variant="h6">Description: </Typography>
                 </Grid>
                 <Grid item xs={12} md={10}>

@@ -14,47 +14,104 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import React from "react";
 import { green, red, teal } from "@mui/material/colors";
 import { Box } from "@mui/system";
+import moment from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  likeAnnouncement,
+  dislikeAnnouncement,
+  unLikeAnnouncement,
+  unDislikeAnnouncement,
+  deleteAnnouncement,
+} from "../reducers/actions/announcements";
+import DeleteIcon from "@mui/icons-material/DeleteOutline";
 
-function NewAnnouncement() {
-  const [upState, setUpState] = React.useState(false);
-  const [downState, setDownState] = React.useState(false);
-  const [likes, setLikes] = React.useState(0);
+function NewAnnouncement(props) {
+  const [upState, setUpState] = React.useState(
+    props.likes.includes(props.currentUser)
+  );
+  const [downState, setDownState] = React.useState(
+    props.dislikes.includes(props.currentUser)
+  );
+  const [likes, setLikes] = React.useState(
+    props.likes.length - props.dislikes.length
+  );
   const [likesColor, setLikesColor] = React.useState("#708090");
-  const date = new Date();
-  const dateStr = `${
-    date.getMonth() + 1
-  }/${date.getDate()}/${date.getFullYear()} - ${
-    date.getHours() > 12 ? date.getHours() - 12 : date.getHours()
-  }:${date.getMinutes()} ${date.getHours() > 12 ? "PM" : "AM"}`;
+  const dispatch = useDispatch();
+  const owner = useSelector((state) => state.owner);
 
   const handleUpState = () => {
     if (upState) {
       setUpState(false);
       setLikes(likes - 1);
+      dispatch(
+        unLikeAnnouncement({
+          announcementId: props.id,
+          userId: props.currentUser,
+        })
+      );
       return;
     }
     setUpState(true);
     if (downState) {
       setLikes(likes + 2);
       setDownState(false);
+      dispatch(
+        unDislikeAnnouncement({
+          announcementId: props.id,
+          userId: props.currentUser,
+        })
+      );
+      dispatch(
+        likeAnnouncement({
+          announcementId: props.id,
+          userId: props.currentUser,
+        })
+      );
       return;
     }
     setLikes(likes + 1);
+    dispatch(
+      likeAnnouncement({ announcementId: props.id, userId: props.currentUser })
+    );
   };
 
   const handleDownState = () => {
     if (downState) {
       setDownState(false);
       setLikes(likes + 1);
+      dispatch(
+        unDislikeAnnouncement({
+          announcementId: props.id,
+          userId: props.currentUser,
+        })
+      );
       return;
     }
     setDownState(true);
     if (upState) {
       setLikes(likes - 2);
       setUpState(false);
+      dispatch(
+        unLikeAnnouncement({
+          announcementId: props.id,
+          userId: props.currentUser,
+        })
+      );
+      dispatch(
+        dislikeAnnouncement({
+          announcementId: props.id,
+          userId: props.currentUser,
+        })
+      );
       return;
     }
     setLikes(likes - 1);
+    dispatch(
+      dislikeAnnouncement({
+        announcementId: props.id,
+        userId: props.currentUser,
+      })
+    );
   };
 
   React.useEffect(() => {
@@ -69,6 +126,10 @@ function NewAnnouncement() {
     setLikesColor("#708090");
   }, [likes]);
 
+  const handleAnnouncementDelete = () => {
+    dispatch(deleteAnnouncement({announcementId: props.id}));
+  }
+
   return (
     <>
       <Paper>
@@ -82,12 +143,7 @@ function NewAnnouncement() {
                 "& > *:not(:first-child)": { ml: 2 },
               }}
             >
-              <Avatar
-                src={
-                  "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
-                }
-                sx={{ height: 50, width: 50 }}
-              />
+              <Avatar src={props.owner.image} sx={{ height: 50, width: 50 }} />
               <Box
                 sx={{
                   display: "flex",
@@ -108,23 +164,24 @@ function NewAnnouncement() {
                   }}
                 >
                   <Typography variant="body1" fontWeight={500}>
-                    user
+                    {`${props.owner.firstName} ${props.owner.lastName}`}
                   </Typography>
                 </Link>
                 <Typography variant="body2" sx={{ color: "#708090" }}>
-                  {dateStr}
+                  {moment(props.date).fromNow()}
                 </Typography>
               </Box>
+              {owner && (
+                <IconButton onClick={handleAnnouncementDelete}>
+                  <DeleteIcon sx={{ color: red[500] }} />
+                </IconButton>
+              )}
               <Chip variant="outlined" label="Project Manager" />
             </Box>
           </Grid>
           <Grid item xs={12} marginTop={2}>
             <Grid item xs>
-              <Typography variant="body1">
-                This announcement is towarded to the development team.
-                <br /> We will be having a meeting on Sunday, 5th of December at
-                10:00 AM throughout the website.
-              </Typography>
+              <Typography variant="body1">{props.content}</Typography>
             </Grid>
           </Grid>
           <Grid item xs={12} padding={2} paddingBottom={1}>
