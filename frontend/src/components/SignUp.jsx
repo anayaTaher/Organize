@@ -81,10 +81,9 @@ export default function SignUp() {
       .then(() => {
         const data = { email, password };
         dispatch(signIn(data));
-        // history.push("/chat-room")
       });
   };
-
+ 
   const signUpWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth
