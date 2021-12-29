@@ -76,7 +76,7 @@ export default function Login() {
 				dispatch(signIn(data))
 				auth.signInWithEmailAndPassword(email, password).then(cred => {
 					db.collection('users').doc(cred.user.uid).update({isOnline: true}).then(() => {
-						history.push("/chat-room")
+						history.push("/")
 					})
 				})
 			}
