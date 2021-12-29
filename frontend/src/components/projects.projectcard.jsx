@@ -7,8 +7,10 @@ import {
   Card,
   Avatar,
 } from "@mui/material";
+import {useHistory} from "react-router-dom"
 
 function ProjectCard({ name, img, projectID }) {
+  const history = useHistory();
   return (
     <>
       <Box
@@ -28,7 +30,7 @@ function ProjectCard({ name, img, projectID }) {
             justifyContent: "center",
             color: "black",
           }}
-          href={window.location.href + "/" + projectID}
+          onClick={() => history.push(`/projects/${projectID}`)}
         >
           <CardContent>
             <Box
